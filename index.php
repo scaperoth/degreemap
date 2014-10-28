@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Matt's DegreeMap | Welcome</title>
+	<title><?php echo $student_fname;?>'s DegreeMap | Welcome</title>
 	<link rel="stylesheet" href="css/foundation.css" />
 	<link rel="stylesheet" href="css/foundation-icons.css" />
 	<script src="js/vendor/modernizr.js"></script>
@@ -24,18 +24,43 @@
 			font-size:1.5em;
 			color:#fefefe;
 		}
+		table{
+			border-collapse: collapse;
+		}	
 
-		table td{
-			vertical-align: bottom;
+		table thead tr th, table tbody tr td{
+			text-align:center; 
+			vertical-align:bottom;
 		}
+
+		table, th, td {
+			border: 1px solid #999;
+		}
+
+		.cell_head{
+			height:30px;
+		}
+		.cell_body{
+			height:100px;
+		}
+
+		h3 small a{
+			line-height: 60%;
+		}
+
+		footer{
+			padding-bottom:30px;
+		}
+
+
 	</style>
 </head>
 <body>
 
 	<div class="row">
 		<div class="medium-12 columns">
-			<h1>Welcome to My Degreemap</h1>
-			<h3 class="subheader">Updated up to Spr 2015</h3>
+			<h1>Welcome to <?php echo $student_fname;?>'s Degreemap</h1>
+			<h3 class="subheader">Updated up to SP 2015</h3>
 		</div>
 	</div>
 
@@ -87,15 +112,19 @@
 								<p align="center"><?php echo $key; ?></p>
 							</td>
 							<?php foreach($value as $innerkey => $innervalue): ?>
-								<td>
-									<a target="blank" href="<?php echo $innervalue['link']; ?>">
-										<?php echo $innerkey; ?>
-									</a> 
-									(<?php echo $innervalue['credits']; ?>)
-									<p>
-										<?php echo $innervalue['description']; ?>
-									</p>
-									<div class="<?php echo $innervalue['label-color']; ?> label ">
+								<td align="center">
+									<h5>
+										<a class="cell_head" target="blank" href="<?php echo $innervalue['link']; ?>">
+											<?php echo $innerkey; ?>
+										</a> 
+										(<?php echo $innervalue['credits']; ?>)
+									</h5>
+									<h5 class="subheader cell_body">
+										<small>
+											<?php echo $innervalue['description']; ?>
+										</small>
+									</h5>
+									<div class="cell_footer <?php echo $innervalue['label-color']; ?> label " >
 										<h4>
 											<?php echo $innervalue['label-message']; ?>
 										</h4>
@@ -127,5 +156,14 @@
 		<script>
 			$(document).foundation();
 		</script>
+		<hr/>
+		<footer>
+			<h3 class="subheader text-center">
+				<small>
+					Created By: <span><?php echo $student_fname. " " . $student_lname; ?></span>
+				</small>
+			</h3>
+		</footer>
+
 	</body>
 	</html>

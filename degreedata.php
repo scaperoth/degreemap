@@ -1,12 +1,13 @@
 <?php
-
+$student_fname = "Matt";
+$student_lname = "Scaperoth";
 $max_courses = 0;
 $total_credits = 0;
 
 //array indexed by semester number
 $degreedata = array(
 	1 => array( 
-		"Humanities or Social Science (H/SS) Elective 1" => array(
+		"H/SS 1" => array(
 			"credits"=>3,
 			"description"=>"",
 			"link"=> "http://www.cs.gwu.edu/academics/undergraduate_programs/bs/elective",
@@ -22,7 +23,7 @@ $degreedata = array(
 			"label-message"=>"Xfer Java 1",
 			),
 		"CSci 1010"=> array(
-			"credits"=>1,
+			"credits"=>2,
 			"description"=>"Computer Science Orientation (Entering SEAS freshmen also take SEAS 1001 (1))",
 			"link"=> "http://bulletin.gwu.edu/engineering-applied-science/computer-science/#coursestext",
 			"label-color"=>"warning",
@@ -211,7 +212,7 @@ $degreedata = array(
 		"description"=>"",
 		"link"=> "http://www.cs.gwu.edu/academics/undergraduate_programs/non-tech",
 		"label-color"=>"alert",
-		"label-message"=>"?",
+		"label-message"=>"? ",
 		),
 	"Unrestricted Elective 2"=> array(
 		"credits"=>3,
@@ -248,7 +249,7 @@ $degreedata = array(
 		"description"=>"",
 		"link"=> "http://www.cs.gwu.edu/academics/undergraduate_programs/non-tech",
 		"label-color"=>"alert",
-		"label-message"=>"?",
+		"label-message"=>"? ",
 		),
 	"Unrestricted Elective 3"=> array(
 		"credits"=>3,
@@ -285,7 +286,7 @@ $degreedata = array(
 		"description"=>"",
 		"link"=> "http://www.cs.gwu.edu/academics/undergraduate_programs/non-tech",
 		"label-color"=>"alert",
-		"label-message"=>"?",
+		"label-message"=>"? ",
 		),
 	"Unrestricted Elective 5"=> array(
 		"credits"=>3,
@@ -309,6 +310,17 @@ foreach ($degreedata as $key=>$value){
 		$total_credits += $innervalue['credits'];
 	}
 }
+
+/**
+  test
+  <?php if($innervalue['description'] !== ""):?>
+  <span data-tooltip aria-haspopup="true" class="has-tip" title="<?php echo $innervalue['description']; ?>">
+						<?php echo $innerkey; ?>
+													</span>
+												<?php else: ?>
+													<?php echo $innerkey; ?>
+												<?php endif; ?>
+ */
 
 
 ?>
