@@ -9,8 +9,9 @@ can be found under the degreemap_app folder.
 
 The main controller is in degreemap_app/controllers/pages.php. 
 
-To create the database execute the commands in create_db.sql in the root folder. A sample username
-and password can be found in that file. 
+The database create commands can be found in the root file create_db.sql. To create the database, execute the these MySQL commands in a MySQL editor or shell prompt.  
+
+> Note: A sample username and password can be found in the same file. 
 
 If you would like to populate the database with test data (after it's been created of course), then
 you can execute the following code anywhere in your main view or index action in the pages controller: 
