@@ -1,0 +1,65 @@
+/*
+Distributed under the MIT License.
+*/
+/* 
+    Created on : Oct 30, 2014, 8:15:46 PM
+    Author     : matthew scaperoth
+*/
+
+/*************
+TYPOGRAPHY
+*************/
+/*LABELS*/
+.label h4{
+    font-size:1.5em;
+    color:#fefefe;
+}
+/*LINKS*/
+h3 small a{
+    line-height: 60%;
+}
+
+/*************
+HEADER
+*************/
+.icon-bar.three-up{
+    margin:0 auto;
+}
+.icon-bar.three-up .item{
+    margin-right:12px;
+    width:32%;
+}
+
+/*************
+TABLE
+*************/
+table{
+    border-collapse: collapse;
+}	
+
+/*TABLE BORDER*/
+table, th, td {
+    border: 1px solid #999;
+}
+
+/*TABLE HEADERS AND CELLS*/
+table thead tr th, table tbody tr td{
+    text-align:center; 
+    vertical-align:bottom;
+}
+
+/*CUSTOM TABLE CELLS*/
+.cell_head{
+    height:30px;
+}
+.cell_body{
+    height:100px;
+}
+
+/*************
+FOOTER
+*************/
+footer{
+    padding-bottom:30px;
+}
+
