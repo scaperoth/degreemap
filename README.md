@@ -23,6 +23,8 @@ $this->course_model->putTest();
 This function will use the associative array in the course model to populate the columns in 
 the database. 
 
+> Note: You can also change the user first name and last name in the main page controller.
+
 ###Dependencies
 
 This application was tested on (PHP Ver 5.6)[PHP] with (MySQL)[MySQL] using the (CodeIgniter PHP framework)[CodeIgniter].
