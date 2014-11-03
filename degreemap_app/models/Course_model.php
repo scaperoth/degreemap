@@ -45,7 +45,7 @@ QUERY;
         $result = $this->db->query($query);
 
         if ($result->first_row()) {
-            return $result->first_row()->max_count;
+            return $result->first_row()->max_count+1;
         }
         else
             return 0;

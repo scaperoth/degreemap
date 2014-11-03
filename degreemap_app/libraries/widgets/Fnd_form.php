@@ -14,75 +14,92 @@ class Fnd_form {
      * @param array $html_options
      * @return type
      */
-    public static function modal($form_options = array(), $html_options = array()) {
+    public static function start_form($form_args = array(), $html_options = array()) {
+        $html_options['method'] = Fnd_Array::popValue('method', $form_args, 'POST');
+        $html_options['action'] = Fnd_Array::popValue('route', $form_args, '');
         
+        return Fnd_HTML::tag('form', $html_options);
         /*
 
           <form>
+          <div class="row collapse">
+          <div class="small-3 large-2 columns">
+          <span class="prefix">http://</span>
+          </div>
+          <div class="small-9 large-10 columns">
+          <input type="text" placeholder="Enter your URL...">
+          </div>
+          </div>
           <div class="row">
           <div class="large-12 columns">
-          <label>Input Label
-          <input type="text" placeholder="large-12.columns" />
-          </label>
+          <div class="row collapse">
+          <div class="small-10 columns">
+          <input type="text" placeholder="Hex Value">
+          </div>
+          <div class="small-2 columns">
+          <a href="#" class="button postfix">Go</a>
+          </div>
+          </div>
           </div>
           </div>
           <div class="row">
-          <div class="large-4 columns">
-          <label>Input Label
-          <input type="text" placeholder="large-4.columns" />
-          </label>
+          <div class="large-6 columns">
+          <div class="row collapse prefix-radius">
+          <div class="small-3 columns">
+          <span class="prefix">Label</span>
           </div>
-          <div class="large-4 columns">
-          <label>Input Label
-          <input type="text" placeholder="large-4.columns" />
-          </label>
-          </div>
-          <div class="large-4 columns">
-          <div class="row collapse">
-          <label>Input Label</label>
           <div class="small-9 columns">
-          <input type="text" placeholder="small-9.columns" />
+          <input type="text" placeholder="Value">
+          </div>
+          </div>
+          </div>
+          <div class="large-6 columns">
+          <div class="row collapse postfix-radius">
+          <div class="small-9 columns">
+          <input type="text" placeholder="Value">
           </div>
           <div class="small-3 columns">
-          <span class="postfix">.com</span>
+          <span class="postfix">Label</span>
           </div>
           </div>
-          </div>
-          </div>
-          <div class="row">
-          <div class="large-12 columns">
-          <label>Select Box
-          <select>
-          <option value="husker">Husker</option>
-          <option value="starbuck">Starbuck</option>
-          <option value="hotdog">Hot Dog</option>
-          <option value="apollo">Apollo</option>
-          </select>
-          </label>
           </div>
           </div>
           <div class="row">
           <div class="large-6 columns">
-          <label>Choose Your Favorite</label>
-          <input type="radio" name="pokemon" value="Red" id="pokemonRed"><label for="pokemonRed">Red</label>
-          <input type="radio" name="pokemon" value="Blue" id="pokemonBlue"><label for="pokemonBlue">Blue</label>
+          <div class="row collapse prefix-round">
+          <div class="small-3 columns">
+          <a href="#" class="button prefix">Go</a>
+          </div>
+          <div class="small-9 columns">
+          <input type="text" placeholder="Value">
+          </div>
+          </div>
           </div>
           <div class="large-6 columns">
-          <label>Check these out</label>
-          <input id="checkbox1" type="checkbox"><label for="checkbox1">Checkbox 1</label>
-          <input id="checkbox2" type="checkbox"><label for="checkbox2">Checkbox 2</label>
+          <div class="row collapse postfix-round">
+          <div class="small-9 columns">
+          <input type="text" placeholder="Value">
+          </div>
+          <div class="small-3 columns">
+          <a href="#" class="button postfix">Go</a>
           </div>
           </div>
-          <div class="row">
-          <div class="large-12 columns">
-          <label>Textarea Label
-          <textarea placeholder="small-12.columns"></textarea>
-          </label>
           </div>
           </div>
           </form>
          *
          */
+    }
+
+    /**
+     * 
+     * @param type $form_options
+     * @param array $html_options
+     * @return type
+     */
+    public static function end_form($form_options = array(), $html_options = array()) {
+        $output = "</form>";
+        return $output;
     }
 
 }

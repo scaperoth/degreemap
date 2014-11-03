@@ -12,6 +12,8 @@ if (!defined('BASEPATH'))
  */
 class Fnd_HTML {
 
+    const ID_PREFIX = 'yt';
+
     /**
      * @var boolean whether to close single tags. Defaults to true. Can be set to false for HTML5.
      * @since 1.1.13
@@ -24,7 +26,25 @@ class Fnd_HTML {
      */
     public static $renderSpecialAttributesValue = true;
 
+    /**
+     * @var string the HTML code to be prepended to the required label.
+     * @see label
+     */
+    public static $beforeRequiredLabel = '';
+
+    /**
+     * @var string the HTML code to be appended to the required label.
+     * @see label
+     */
+    public static $afterRequiredLabel = ' <span class="required">*</span>';
+
     const CHARSET = 'UTF-8';
+
+    /**
+     * @var integer the counter for generating automatic input field names.
+     */
+    public static $count = 0;
+
 //
 // TYPOGRAPHY
 // --------------------------------------------------
@@ -446,7 +466,6 @@ class Fnd_HTML {
      */
     public static $errorSummaryCss = 'alert alert-block alert-danger';
 
-
     /**
      * Generates a paragraph that stands out.
      * @param string $text the lead text.
@@ -684,51 +703,6 @@ class Fnd_HTML {
     }
 
     /**
-     * Generates a stateful form tag.
-     * @param mixed $action the form action URL.
-     * @param string $method form method (e.g. post, get).
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated form tag.
-     */
-    public static function statefulFormBs(
-    $layout = self::FORM_LAYOUT_VERTICAL, $action = '', $method = 'post', $htmlOptions = array()
-    ) {
-        return self::formBs($layout, $action, $method, $htmlOptions)
-                . self::tag('div', array('style' => 'display: none'), parent::pageStateField(''));
-    }
-
-    /**
-     * Generates a form tag.
-     * @param string $layout the form layout.
-     * @param string $action the form action URL.
-     * @param string $method form method (e.g. post, get).
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated tag.
-     */
-    public static function formBs(
-    $layout = self::FORM_LAYOUT_VERTICAL, $action = '', $method = 'post', $htmlOptions = array()
-    ) {
-        return self::beginFormBs($layout, $action, $method, $htmlOptions);
-    }
-
-    /**
-     * Generates an open form tag.
-     * @param string $layout the form layout.
-     * @param string $action the form action URL.
-     * @param string $method form method (e.g. post, get).
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated tag.
-     */
-    public static function beginFormBs(
-    $layout = self::FORM_LAYOUT_VERTICAL, $action = '', $method = 'post', $htmlOptions = array()
-    ) {
-        if (!empty($layout)) {
-            self::addCssClass('form-' . $layout, $htmlOptions);
-        }
-        return parent::beginForm($action, $method, $htmlOptions);
-    }
-
-    /**
      * Generates a control group with a text field.
      * @param string $name the input name.
      * @param string $value the input value.
@@ -777,11 +751,82 @@ class Fnd_HTML {
         self::addCssClass('control-label', $labelOptions);
         $output = self::openTag('div', $groupOptions);
         if ($label !== false) {
-            $output .= parent::label($label, $name, $labelOptions);
+            $output .= self::label($label, $name, $labelOptions);
         }
         $output .= self::controls($input . $help, $controlOptions);
         $output .= '</div>';
         return $output;
+        
+        /*
+
+          <form>
+          <div class="row collapse">
+          <div class="small-3 large-2 columns">
+          <span class="prefix">http://</span>
+          </div>
+          <div class="small-9 large-10 columns">
+          <input type="text" placeholder="Enter your URL...">
+          </div>
+          </div>
+          <div class="row">
+          <div class="large-12 columns">
+          <div class="row collapse">
+          <div class="small-10 columns">
+          <input type="text" placeholder="Hex Value">
+          </div>
+          <div class="small-2 columns">
+          <a href="#" class="button postfix">Go</a>
+          </div>
+          </div>
+          </div>
+          </div>
+          <div class="row">
+          <div class="large-6 columns">
+          <div class="row collapse prefix-radius">
+          <div class="small-3 columns">
+          <span class="prefix">Label</span>
+          </div>
+          <div class="small-9 columns">
+          <input type="text" placeholder="Value">
+          </div>
+          </div>
+          </div>
+          <div class="large-6 columns">
+          <div class="row collapse postfix-radius">
+          <div class="small-9 columns">
+          <input type="text" placeholder="Value">
+          </div>
+          <div class="small-3 columns">
+          <span class="postfix">Label</span>
+          </div>
+          </div>
+          </div>
+          </div>
+          <div class="row">
+          <div class="large-6 columns">
+          <div class="row collapse prefix-round">
+          <div class="small-3 columns">
+          <a href="#" class="button prefix">Go</a>
+          </div>
+          <div class="small-9 columns">
+          <input type="text" placeholder="Value">
+          </div>
+          </div>
+          </div>
+          <div class="large-6 columns">
+          <div class="row collapse postfix-round">
+          <div class="small-9 columns">
+          <input type="text" placeholder="Value">
+          </div>
+          <div class="small-3 columns">
+          <a href="#" class="button postfix">Go</a>
+          </div>
+          </div>
+          </div>
+          </div>
+          </form>
+         *
+         */
     }
 
     /**
@@ -888,6 +933,21 @@ class Fnd_HTML {
     }
 
     /**
+     * Generates a file input.
+     * Note, you have to set the enclosing form's 'enctype' attribute to be 'multipart/form-data'.
+     * After the form is submitted, the uploaded file information can be obtained via $_FILES[$name] (see
+     * PHP documentation).
+     * @param string $name the input name
+     * @param string $value the input value
+     * @param array $htmlOptions additional HTML attributes (see {@link tag}).
+     * @return string the generated input field
+     * @see inputField
+     */
+    public static function fileField($name, $value = '', $htmlOptions = array()) {
+        return self::inputField('file', $name, $value, $htmlOptions);
+    }
+
+    /**
      * Generates a password field input.
      * @param string $name the input name.
      * @param string $value the input value.
@@ -909,7 +969,6 @@ class Fnd_HTML {
      * @return string the generated input tag.
      */
     protected static function textInputField($type, $name, $value, $htmlOptions) {
-        parent::clientChange('change', $htmlOptions);
 
         $htmlOptions = self::normalizeInputOptions($htmlOptions);
 
@@ -999,6 +1058,15 @@ class Fnd_HTML {
     }
 
     /**
+     * Generates a close HTML element.
+     * @param string $tag the tag name
+     * @return string the generated HTML element tag
+     */
+    public static function closeTag($tag) {
+        return '</' . $tag . '>';
+    }
+
+    /**
      * Generates an url field input.
      * @param string $name the input name.
      * @param string $value the input value.
@@ -1072,26 +1140,21 @@ class Fnd_HTML {
 
     /**
      * Generates a text area input.
-     * @param string $name the input name.
-     * @param string $value the input value.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated text area.
+     * @param string $name the input name
+     * @param string $value the input value
+     * @param array $htmlOptions additional HTML attributes. Besides normal HTML attributes, a few special
+     * attributes are also recognized (see {@link clientChange} and {@link tag} for more details.)
+     * @return string the generated text area
+     * @see clientChange
+     * @see inputField
      */
     public static function textArea($name, $value = '', $htmlOptions = array()) {
-        $htmlOptions = self::normalizeInputOptions($htmlOptions);
-        return parent::textArea($name, $value, $htmlOptions);
-    }
-
-    /**
-     * Generates a file field input.
-     * @param string $name the input name.
-     * @param string $value the input value.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see CHtml::fileField
-     */
-    public static function fileField($name, $value = '', $htmlOptions = array()) {
-        return parent::fileField($name, $value, $htmlOptions);
+        $htmlOptions['name'] = $name;
+        if (!isset($htmlOptions['id']))
+            $htmlOptions['id'] = self::getIdByName($name);
+        elseif ($htmlOptions['id'] === false)
+            unset($htmlOptions['id']);
+        return self::tag('textarea', $htmlOptions, isset($htmlOptions['encode']) && !$htmlOptions['encode'] ? $value : self::encode($value));
     }
 
     /**
@@ -1663,11 +1726,156 @@ EOD;
         $output = self::openTag('div', $groupOptions);
         if ($label !== false && !is_null($layout)) {
 // todo: consider adding support for overriding the label with plain text.
-            $output .= parent::activeLabelEx($model, $attribute, $labelOptions);
+            $output .= self::activeLabelEx($model, $attribute, $labelOptions);
         }
         $output .= self::controls($input . $error . $help, $controlOptions);
         $output .= '</div>';
         return $output;
+    }
+
+    /**
+     * Generates a label tag.
+     * @param string $label label text. Note, you should HTML-encode the text if needed.
+     * @param string $for the ID of the HTML element that this label is associated with.
+     * If this is false, the 'for' attribute for the label tag will not be rendered.
+     * @param array $htmlOptions additional HTML attributes.
+     * The following HTML option is recognized:
+     * <ul>
+     * <li>required: if this is set and is true, the label will be styled
+     * with CSS class 'required' (customizable with CHtml::$requiredCss),
+     * and be decorated with {@link CHtml::beforeRequiredLabel} and
+     * {@link CHtml::afterRequiredLabel}.</li>
+     * </ul>
+     * @return string the generated label tag
+     */
+    public static function label($label, $for, $htmlOptions = array()) {
+        if ($for === false)
+            unset($htmlOptions['for']);
+        else
+            $htmlOptions['for'] = $for;
+        if (isset($htmlOptions['required'])) {
+            if ($htmlOptions['required']) {
+                if (isset($htmlOptions['class']))
+                    $htmlOptions['class'].=' ' . self::$requiredCss;
+                else
+                    $htmlOptions['class'] = self::$requiredCss;
+                $label = self::$beforeRequiredLabel . $label . self::$afterRequiredLabel;
+            }
+            unset($htmlOptions['required']);
+        }
+        return self::tag('label', $htmlOptions, $label);
+    }
+
+    /**
+     * Generates an input HTML tag.
+     * This method generates an input HTML tag based on the given input name and value.
+     * @param string $type the input type (e.g. 'text', 'radio')
+     * @param string $name the input name
+     * @param string $value the input value
+     * @param array $htmlOptions additional HTML attributes for the HTML tag (see {@link tag}).
+     * @return string the generated input tag
+     */
+    protected static function inputField($type, $name, $value, $htmlOptions) {
+        $htmlOptions['type'] = $type;
+        $htmlOptions['value'] = $value;
+        $htmlOptions['name'] = $name;
+        if (!isset($htmlOptions['id']))
+            $htmlOptions['id'] = self::getIdByName($name);
+        elseif ($htmlOptions['id'] === false)
+            unset($htmlOptions['id']);
+        return self::tag('input', $htmlOptions);
+    }
+
+    /**
+     * Generates a label tag for a model attribute.
+     * The label text is the attribute label and the label is associated with
+     * the input for the attribute (see {@link CModel::getAttributeLabel}.
+     * If the attribute has input error, the label's CSS class will be appended with {@link errorCss}.
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @param array $htmlOptions additional HTML attributes. The following special options are recognized:
+     * <ul>
+     * <li>required: if this is set and is true, the label will be styled
+     * with CSS class 'required' (customizable with CHtml::$requiredCss),
+     * and be decorated with {@link CHtml::beforeRequiredLabel} and
+     * {@link CHtml::afterRequiredLabel}.</li>
+     * <li>label: this specifies the label to be displayed. If this is not set,
+     * {@link CModel::getAttributeLabel} will be called to get the label for display.
+     * If the label is specified as false, no label will be rendered.</li>
+     * </ul>
+     * @return string the generated label tag
+     */
+    public static function activeLabel($model, $attribute, $htmlOptions = array()) {
+        if (isset($htmlOptions['for'])) {
+            $for = $htmlOptions['for'];
+            unset($htmlOptions['for']);
+        } else
+            $for = self::getIdByName(self::resolveName($model, $attribute));
+        if (isset($htmlOptions['label'])) {
+            if (($label = $htmlOptions['label']) === false)
+                return '';
+            unset($htmlOptions['label']);
+        } else
+            $label = $model->getAttributeLabel($attribute);
+        if ($model->hasErrors($attribute))
+            self::addErrorCss($htmlOptions);
+        return self::label($label, $for, $htmlOptions);
+    }
+
+    /**
+     * Generates a valid HTML ID based on name.
+     * @param string $name name from which to generate HTML ID
+     * @return string the ID generated based on name.
+     */
+    public static function getIdByName($name) {
+        return str_replace(array('[]', '][', '[', ']', ' '), array('', '_', '_', '', '_'), $name);
+    }
+
+    /**
+     * Generates a label tag for a model attribute.
+     * This is an enhanced version of {@link activeLabel}. It will render additional
+     * CSS class and mark when the attribute is required.
+     * In particular, it calls {@link CModel::isAttributeRequired} to determine
+     * if the attribute is required.
+     * If so, it will add a CSS class {@link CHtml::requiredCss} to the label,
+     * and decorate the label with {@link CHtml::beforeRequiredLabel} and
+     * {@link CHtml::afterRequiredLabel}.
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @param array $htmlOptions additional HTML attributes.
+     * @return string the generated label tag
+     */
+    public static function activeLabelEx($model, $attribute, $htmlOptions = array()) {
+        $realAttribute = $attribute;
+        self::resolveName($model, $attribute); // strip off square brackets if any
+        $htmlOptions['required'] = $model->isAttributeRequired($attribute);
+        return self::activeLabel($model, $realAttribute, $htmlOptions);
+    }
+
+    /**
+     * Generates input name for a model attribute.
+     * Note, the attribute name may be modified after calling this method if the name
+     * contains square brackets (mainly used in tabular input) before the real attribute name.
+     * @param CModel $model the data model
+     * @param string $attribute the attribute
+     * @return string the input name
+     */
+    public static function resolveName($model, &$attribute) {
+        if (($pos = strpos($attribute, '[')) !== false) {
+            if ($pos !== 0)  // e.g. name[a][b]
+                return get_class($model) . '[' . substr($attribute, 0, $pos) . ']' . substr($attribute, $pos);
+            if (($pos = strrpos($attribute, ']')) !== false && $pos !== strlen($attribute) - 1) {  // e.g. [a][b]name
+                $sub = substr($attribute, 0, $pos + 1);
+                $attribute = substr($attribute, $pos + 1);
+                return get_class($model) . $sub . '[' . $attribute . ']';
+            }
+            if (preg_match('/\](\w+\[.*)$/', $attribute, $matches)) {
+                $name = get_class($model) . '[' . str_replace(']', '][', trim(strtr($attribute, array('][' => ']', '[' => ']')), ']')) . ']';
+                $attribute = $matches[1];
+                return $name;
+            }
+        }
+        return get_class($model) . '[' . $attribute . ']';
     }
 
     /**
@@ -1725,142 +1933,6 @@ EOD;
             default:
                 throw new CException('Invalid input type "' . $type . '".');
         }
-    }
-
-    /**
-     * Generates a password field input for a model attribute.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see self::activeTextInputField
-     */
-    public static function activePasswordField($model, $attribute, $htmlOptions = array()) {
-        return self::activeTextInputField('password', $model, $attribute, $htmlOptions);
-    }
-
-    /**
-     * Generates an input HTML tag  for a model attribute.
-     * This method generates an input HTML tag based on the given input name and value.
-     * @param string $type the input type.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input tag.
-     */
-    protected static function activeTextInputField($type, $model, $attribute, $htmlOptions) {
-        parent::resolveNameID($model, $attribute, $htmlOptions);
-        parent::clientChange('change', $htmlOptions);
-        $htmlOptions = self::normalizeInputOptions($htmlOptions);
-        $addOnClasses = self::getAddOnClasses($htmlOptions);
-        $addOnOptions = Fnd_Array::popValue('addOnOptions', $htmlOptions, array());
-        self::addCssClass('form-control', $htmlOptions);
-
-        $attributesLabel = $model->attributeLabels();
-        $placeHolder = Fnd_Array::popValue('placeholder', $htmlOptions, false);
-
-
-        if (!empty($placeHolder)) {
-            $htmlOptions['placeholder'] = $placeHolder;
-        } else {
-            $htmlOptions['placeholder'] = isset($attributesLabel[$attribute]) ? $attributesLabel[$attribute] : '';
-        }
-
-        self::addCssClass($addOnClasses, $addOnOptions);
-
-        $prepend = Fnd_Array::popValue('prepend', $htmlOptions, '');
-        $prependOptions = Fnd_Array::popValue('prependOptions', $htmlOptions, array());
-        if (!empty($prepend)) {
-            $prepend = self::inputAddOn($prepend, $prependOptions);
-        }
-
-        $append = Fnd_Array::popValue('append', $htmlOptions, '');
-        $appendOptions = Fnd_Array::popValue('appendOptions', $htmlOptions, array());
-        if (!empty($append)) {
-            $append = self::inputAddOn($append, $appendOptions);
-        }
-
-        $output = '';
-        if (!empty($addOnClasses)) {
-            $output .= self::openTag('div', $addOnOptions);
-        }
-        $output .= $prepend . parent::activeInputField($type, $model, $attribute, $htmlOptions) . $append;
-        if (!empty($addOnClasses)) {
-            $output .= '</div>';
-        }
-        return $output;
-    }
-
-    /**
-     * Generates an url field input for a model attribute.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see self::activeTextInputField
-     */
-    public static function activeUrlField($model, $attribute, $htmlOptions = array()) {
-        return self::activeTextInputField('url', $model, $attribute, $htmlOptions);
-    }
-
-    /**
-     * Generates an email field input for a model attribute.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see self::activeTextInputField
-     */
-    public static function activeEmailField($model, $attribute, $htmlOptions = array()) {
-        return self::activeTextInputField('email', $model, $attribute, $htmlOptions);
-    }
-
-    /**
-     * Generates a telephone field input for a model attribute.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see self::activeTextInputField
-     */
-    public static function activeTelField($model, $attribute, $htmlOptions = array()) {
-        return self::activeTextInputField('tel', $model, $attribute, $htmlOptions);
-    }
-
-    /**
-     * Generates a number field input for a model attribute.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see self::activeTextInputField
-     */
-    public static function activeNumberField($model, $attribute, $htmlOptions = array()) {
-        return self::activeTextInputField('number', $model, $attribute, $htmlOptions);
-    }
-
-    /**
-     * Generates a range field input for a model attribute.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see self::activeTextInputField
-     */
-    public static function activeRangeField($model, $attribute, $htmlOptions = array()) {
-        return self::activeTextInputField('range', $model, $attribute, $htmlOptions);
-    }
-
-    /**
-     * Generates a date field input for a model attribute.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see self::activeTextInputField
-     */
-    public static function activeDateField($model, $attribute, $htmlOptions = array()) {
-        return self::activeTextInputField('date', $model, $attribute, $htmlOptions);
     }
 
     /**
@@ -2037,18 +2109,6 @@ EOD;
     public static function activeSearchQueryField($model, $attribute, $htmlOptions = array()) {
         self::addCssClass('search-query', $htmlOptions);
         return self::activeTextField($model, $attribute, $htmlOptions);
-    }
-
-    /**
-     * Generates a text field input for a model attribute.
-     * @param CModel $model the data model.
-     * @param string $attribute the attribute.
-     * @param array $htmlOptions additional HTML attributes.
-     * @return string the generated input field.
-     * @see self::activeTextInputField
-     */
-    public static function activeTextField($model, $attribute, $htmlOptions = array()) {
-        return self::activeTextInputField('text', $model, $attribute, $htmlOptions);
     }
 
     /**
@@ -2393,7 +2453,7 @@ EOD;
         }
         $outPut = parent::openTag('div', array('class' => 'col-lg-offset-2'), array());
         $outPut .= self::tag('div', $htmlOptions, $actions);
-        $outPut .= parent::closeTag('div');
+        $outPut .= self::closeTag('div');
         return $outPut;
     }
 
@@ -2451,7 +2511,7 @@ EOD;
         }
 
         $navbarbtn = Fnd_Array::popValue('type', $htmlOptions, false);
-        if ($navbarbtn === BSHtml::BUTTON_TYPE_NAVBARBUTTON) {
+        if ($navbarbtn === self::BUTTON_TYPE_NAVBARBUTTON) {
             self::addCssClass('navbar-btn', $htmlOptions);
         }
 
@@ -2481,7 +2541,7 @@ EOD;
 
             if (!empty($iconClass) && is_string($iconClass))
                 self::addCssClass($iconClass, $htmlOptions);
-            return self::openTag($tagName, $htmlOptions) . parent::closeTag($tagName); // tag won't work in this case
+            return self::openTag($tagName, $htmlOptions) . self::closeTag($tagName); // tag won't work in this case
         }
         return '';
     }
@@ -2528,35 +2588,35 @@ EOD;
         $ajaxOptions = Fnd_Array::popValue('ajaxOptions', $htmlOptions, array());
         switch ($type) {
             case self::BUTTON_TYPE_HTML:
-                return parent::htmlButton($label, $htmlOptions);
+                return self::parent_htmlButton($label, $htmlOptions);
 
             case self::BUTTON_TYPE_SUBMIT:
                 $htmlOptions['type'] = 'submit';
-                return parent::htmlButton($label, $htmlOptions);
+                return self::parent_htmlButton($label, $htmlOptions);
 
             case self::BUTTON_TYPE_RESET:
                 $htmlOptions['type'] = 'reset';
-                return parent::htmlButton($label, $htmlOptions);
+                return self::parent_htmlButton($label, $htmlOptions);
 
             case self::BUTTON_TYPE_IMAGE:
-                return parent::imageButton($label, $htmlOptions);
+                return self::parent_imageButton($label, $htmlOptions);
 
             case self::BUTTON_TYPE_LINKBUTTON:
                 return parent::linkButton($label, $htmlOptions);
 
             case self::BUTTON_TYPE_AJAXLINK:
-                return parent::ajaxLink($label, $url, $ajaxOptions, $htmlOptions);
+                return self::ajaxLink($label, $url, $ajaxOptions, $htmlOptions);
 
             case self::BUTTON_TYPE_AJAXBUTTON:
                 $htmlOptions['ajax'] = $ajaxOptions;
-                return parent::htmlButton($label, $htmlOptions);
+                return self::parent_htmlButton($label, $htmlOptions);
 
             case self::BUTTON_TYPE_INPUTBUTTON:
-                return parent::button($label, $htmlOptions);
+                return self::button($label, $htmlOptions);
 
             case self::BUTTON_TYPE_INPUTSUBMIT:
                 $htmlOptions['type'] = 'submit';
-                return parent::button($label, $htmlOptions);
+                return self::button($label, $htmlOptions);
 
             case self::BUTTON_TYPE_LINK:
                 return self::link($label, $url, $htmlOptions);
@@ -2564,6 +2624,39 @@ EOD;
             default:
                 throw new CException('Invalid button type "' . $type . '".');
         }
+    }
+
+    /**
+     * Generates a button using HTML button tag.
+     * This method is similar to {@link button} except that it generates a 'button'
+     * tag instead of 'input' tag.
+     * @param string $label the button label. Note that this value will be directly inserted in the button element
+     * without being HTML-encoded.
+     * @param array $htmlOptions additional HTML attributes. Besides normal HTML attributes, a few special
+     * attributes are also recognized (see {@link clientChange} and {@link tag} for more details.)
+     * @return string the generated button tag
+     * @see clientChange
+     */
+    public static function parent_htmlButton($label = 'button', $htmlOptions = array()) {
+        if (!isset($htmlOptions['name']))
+            $htmlOptions['name'] = self::ID_PREFIX . self::$count++;
+        if (!isset($htmlOptions['type']))
+            $htmlOptions['type'] = 'button';
+        return self::tag('button', $htmlOptions, $label);
+    }
+
+    /**
+     * Generates an image submit button.
+     * @param string $src the image URL
+     * @param array $htmlOptions additional HTML attributes. Besides normal HTML attributes, a few special
+     * attributes are also recognized (see {@link clientChange} and {@link tag} for more details.)
+     * @return string the generated button tag
+     * @see clientChange
+     */
+    public static function parent_imageButton($src, $htmlOptions = array()) {
+        $htmlOptions['src'] = $src;
+        $htmlOptions['type'] = 'image';
+        return self::button('submit', $htmlOptions);
     }
 
     /**
@@ -3499,7 +3592,7 @@ EOD;
         $inputOptions = Fnd_Array::merge(array('type' => 'text', 'placeholder' => 'Search'), $inputOptions);
         $name = Fnd_Array::popValue('name', $inputOptions, 'search');
         $value = Fnd_Array::popValue('value', $inputOptions, '');
-        $output = self::beginFormBs(self::FORM_LAYOUT_SEARCH, $action, $method, $htmlOptions);
+        $output = self::beginFormFnd(self::FORM_LAYOUT_SEARCH, $action, $method, $htmlOptions);
         $output .= self::searchQueryField($name, $value, $inputOptions);
         $output .= parent::endForm();
         return $output;
