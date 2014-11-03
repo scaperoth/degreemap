@@ -52,7 +52,11 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array();
+$autoload['libraries'] = array(
+    'widgets/Fnd_modal',
+    'Fnd_HTML',
+    'Fnd_Array',
+);
 
 
 /*

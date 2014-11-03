@@ -18,6 +18,18 @@
     </div>
 </div>
 
+<?php
+print_r(Fnd_modal::modal(
+                array(
+            'header' => 'Modal time',
+            'content' => 'test',
+            'id' => 'myModal',
+                ), array(
+                    'class'=>'tim',
+        ))
+);
+?>
+
 <div class="row">
     <div class="medium-12 columns">
 
