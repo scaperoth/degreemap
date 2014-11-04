@@ -14,16 +14,18 @@ class Pages extends CI_Controller {
      * 
      */
     public function index() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             //on form submit...
-            print_r($_POST);
-            die();
+            //print_r($_POST);
         }
 
         $data['title'] = 'DegreeMap';
         $data['student_fname'] = 'Matt';
         $data['student_lname'] = 'Scaperoth';
         $data['max_courses'] = $this->course_model->get_max_courses();
+
+
         $data['total_credits'] = $this->course_model->get_total_credits();
 
         $data['semesters'] = $this->course_model->get_semesters();

@@ -3,8 +3,8 @@ GWU DEGREE MAP
 
 ###Usage
 
-This application is free to use under the [MIT license]. The framework used here
-is the [CodeIgniter PHP framework]. The controllers, models, and views
+This application is free to use under the (MIT license)[MIT]. The framework used here
+is the (CodeIgniter PHP framework)[CodeIgniter]. The controllers, models, and views
 can be found under the degreemap_app folder.
 
 The main controller is in degreemap_app/controllers/pages.php. 
@@ -27,9 +27,9 @@ the database.
 
 ###Dependencies
 
-This application was tested on [PHP Ver 5.6] with [MySQL] using the [CodeIgniter PHP framework].
+This application was tested on (PHP Ver 5.6)[PHP] with (MySQL)[MySQL] using the (CodeIgniter PHP framework)[CodeIgniter].
 
-[MIT license]: http://opensource.org/licenses/MIT
-[CodeIgniter PHP framework]: https://ellislab.com/codeigniter
+[MIT]: http://opensource.org/licenses/MIT
+[CodeIgniter]: https://ellislab.com/codeigniter
 [MySQL]: http://www.mysql.com/
-[PHP Ver 5.6]: http://php.net/
+[PHP]: http://php.net/

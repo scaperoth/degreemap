@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS `degreemap`.`courses` (
   `credits` INT(1) NOT NULL,
   `description` TEXT NULL,
   `link` TEXT NOT NULL,
-  `label-color` VARCHAR(20) NOT NULL,
-  `label-message` VARCHAR(45) NOT NULL,
+  `labelcolor` VARCHAR(20) NOT NULL,
+  `labelmessage` VARCHAR(45) NOT NULL,
   `position` INT(1) NOT NULL,
   PRIMARY KEY (`title`))
 ENGINE = InnoDB;

@@ -118,7 +118,6 @@ echo Fnd_form::start_form();
 
 
 <?php
-echo Fnd_Html::submitButton();
 echo Fnd_form::end_form();
 
 echo Fnd_modal::end_modal();
@@ -154,31 +153,35 @@ echo Fnd_modal::end_modal();
                         <td >
                             <p align="center"><?php echo $this_semester->semester; ?></p>
                         </td>
-                        <?php foreach ($this_semester_courses->result() as $row): ?>
-                            <td align="center">
-                                <h5>
-                                    <a class="cell_head" target="blank" href="<?php echo $row->link; ?>">
-                                        <?php echo $row->title; ?> 
-                                    </a> 
-                                    (<?php echo $row->credits; ?>)
-                                </h5>
-                                <h5 class="subheader cell_body">
-                                    <small>
-                                        <?php echo $row->description; ?>
-                                    </small>
-                                </h5>
-                                <div class="cell_footer <?php echo $row->{'label-color'}; ?> label " >
-                                    <h4>
-                                        <?php echo $row->{'label-message'}; ?>
-                                    </h4>
-                                </div>
-                            </td>
-
+                        <?php for ($i = 0; $i < $max_courses; $i++): ?>
+                            <?php $row = $this->course_model->get_courses($this_semester->semester, $i); ?>
+                            <?php if ($row !== FALSE): ?>
+                                <td align="center">
+                                    <h5>
+                                        <a class="cell_head" target="blank" href="<?php echo $row->link; ?>">
+                                            <?php echo $row->title; ?> 
+                                        </a> 
+                                        (<?php echo $row->credits; ?>)
+                                    </h5>
+                                    <h5 class="subheader cell_body">
+                                        <small>
+                                            <?php echo $row->description; ?>
+                                        </small>
+                                    </h5>
+                                    <div class="cell_footer <?php echo $row->{'labelcolor'}; ?> label " >
+                                        <h4>
+                                            <?php echo $row->{'labelmessage'}; ?>
+                                        </h4>
+                                    </div>
+                                </td>
+                            <?php else: ?>
+                                <td></td>
+                            <?php endif; ?>
                             <?php
                             $semester_credits += $row->credits;
                             $num_cols += 1;
                             ?>
-                        <?php endforeach; ?>
+                        <?php endfor; ?>
                         <?php
                         while ($num_cols < $max_courses) {
                             echo "<td></td>";
