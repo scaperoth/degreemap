@@ -23,9 +23,6 @@ class Course_model extends CI_Model {
                     . "FROM courses"
                     . "WHERE semester = ? AND position = ?;";
             $result = $this->db->query($query, array($semester, $position));
-            echo "Result: ";
-            echo ($query);
-            die();
             if (is_object($result))
                 return $result;
             else
