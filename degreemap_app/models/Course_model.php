@@ -3,7 +3,7 @@
 class Course_model extends CI_Model {
 
     public function __construct() {
-       
+
         $this->load->database();
     }
 
@@ -12,11 +12,26 @@ class Course_model extends CI_Model {
      * @param type $title
      * @return type
      */
-    public function get_courses($semester = FALSE) {
+    public function get_courses($semester = FALSE, $position = FALSE) {
         if ($semester === FALSE) {
             $query = $this->db->get('courses');
             return $query->result_array();
         }
+
+        if ($position !== FALSE) {
+            $query = "SELECT title, semester, credits, description, link, labelcolor, labelmessage, position "
+                    . "FROM courses"
+                    . "WHERE semester = ? AND position = ?;";
+            $result = $this->db->query($query, array($semester, $position));
+            echo "Result: ";
+            echo ($query);
+            die();
+            if (is_object($result))
+                return $result;
+            else
+                return FALSE;
+        }
+
         $this->db->order_by("position");
         $query = $this->db->get_where('courses', array('semester' => $semester));
         return $query;
@@ -37,18 +52,13 @@ class Course_model extends CI_Model {
      */
     public function get_max_courses() {
         $query = <<< QUERY
-        select count(title) as max_count
-        from courses
-        group by semester
-        order by max_count desc
-        limit 1
+        select max(position) as max_count from courses;
 QUERY;
         $result = $this->db->query($query);
 
         if ($result->first_row()) {
-            return $result->first_row()->max_count+1;
-        }
-        else
+            return $result->first_row()->max_count;
+        } else
             return 0;
     }
 
@@ -58,7 +68,10 @@ QUERY;
      */
     public function get_total_credits() {
         $result = $this->db->query("SELECT SUM(credits) as num_credits from courses;");
-        return $result->first_row()->num_credits;
+        if ($result->first_row())
+            return $result->first_row()->num_credits;
+        else
+            return 0;
     }
 
     /**
