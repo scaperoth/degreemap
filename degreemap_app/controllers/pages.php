@@ -23,6 +23,9 @@ class Pages extends CI_Controller {
         $data['title'] = 'DegreeMap';
         $data['student_fname'] = 'Matt';
         $data['student_lname'] = 'Scaperoth';
+        
+        $data['min_semesters'] = $this->course_model->MIN_SEMESTERS;
+        $data['min_position'] = $this->course_model->MIN_POSITION;
         $data['max_courses'] = $this->course_model->get_max_courses();
 
         $data['total_credits'] = $this->course_model->get_total_credits();

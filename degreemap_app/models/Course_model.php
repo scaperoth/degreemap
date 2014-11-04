@@ -1,7 +1,8 @@
 <?php
 
 class Course_model extends CI_Model {
-
+    
+    //default constants in case there is no table data
     const MAX_COURSES_DEFAULT = 5;
     const MAX_SEMESTERS_DEFAULT = 7;
 
@@ -11,9 +12,13 @@ class Course_model extends CI_Model {
     }
 
     /**
+     * returns the courses for all or any given semester or combination of semester and position.
      * 
-     * @param type $title
-     * @return type
+     * @param int $semester (optional) integer representation of 1 (unelss set to be 0 based) to max semesters
+     * @param int $position (optional) integer representation of 1 (unelss set to be 0 based) to max # courses per semester
+     * @return query result array return all the courses by provided no arguments 
+     * @return query object row return a specific semester's worth of courses by providing the semester 
+     * @return db object of all courses a specific course by providing its semester and grid position.
      */
     public function get_courses($semester = FALSE, $position = FALSE) {
         if ($semester === FALSE) {
@@ -26,7 +31,7 @@ class Course_model extends CI_Model {
                     . "FROM courses "
                     . "WHERE semester = ? AND position = ?;";
             $result = $this->db->query($query, array($semester, $position));
-            if ($result === FALSE || empty($result->first_row()))
+            if ($result === FALSE || !$result->first_row())
                 return FALSE;
             else
                 return $result->first_row();
@@ -39,7 +44,7 @@ class Course_model extends CI_Model {
 
     /**
      * 
-     * @return type
+     * @return query object of semesters (integers)
      */
     public function get_semesters() {
         $query = "select semester from courses group by semester";
@@ -48,41 +53,45 @@ class Course_model extends CI_Model {
 
     /**
      * 
-     * @return type
+     * @return max number of courses for any semester. May default to constant if table is empty 
      */
     public function get_max_courses() {
         $query = "select max(position) as max_count from courses;";
-        
+
         $result = $this->db->query($query);
-        
+
         if ($result === FALSE || $result->first_row()->max_count === NULL)
             return self::MAX_COURSES_DEFAULT;
         else
             return $result->first_row()->max_count;
     }
     
-    public function get_max_semesters(){
+    /**
+     * 
+     * @return maximum number of semesters. May default to constant if table is empty
+     */
+    public function get_max_semesters() {
         $query = "select max(semester) as max_semester from courses;";
-        
+
         $result = $this->db->query($query);
-        
+
         if ($result === FALSE || $result->first_row()->max_semester === NULL)
             return self::MAX_SEMESTERS_DEFAULT;
         else
             return $result->first_row()->max_semester;
     }
-    
+
     /**
      * 
      * @return type
      */
-    public  function get_total_credits() {
+    public function get_total_credits() {
         $result = $this->db->query("SELECT SUM(credits) as num_credits from courses;");
         if ($result === FALSE || $result->first_row()->num_credits === NULL)
             return 0;
-        else;
-            return $result->first_row()->num_credits;
-            
+        
+            else;
+        return $result->first_row()->num_credits;
     }
 
     /**
