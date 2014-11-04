@@ -18,6 +18,112 @@
     </div>
 </div>
 
+<?php
+echo Fnd_modal::start_modal(array(
+    'id' => 'myModal',
+        ), array(
+    'class' => 'tim',
+));
+?>
+
+<h2>Update</h2>
+
+<?php
+echo Fnd_form::start_form();
+?>
+
+<div class="row">
+    <div class="small-4 columns padding-0">
+        <div class="small-6 columns padding-0">
+            <div class="row collapse">
+
+                <div class="small-7 columns">
+                    <span class="prefix">Semester</span>
+                </div>
+                <div class="small-5 columns">
+                    <select name="semester">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="small-6 columns ">
+            <div class="row collapse">
+
+                <div class="small-7 columns">
+                    <span class="prefix">Position</span>
+                </div>
+                <div class="small-5 columns">
+                    <select name="position">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="large-6 columns">
+        <div class="row collapse prefix-radius">
+            <div class="small-3 columns">
+                <span class="prefix">Label</span>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" placeholder="Value">
+            </div>
+        </div>
+    </div>
+    <div class="large-6 columns">
+        <div class="row collapse postfix-radius">
+            <div class="small-9 columns">
+                <input type="text" placeholder="Value">
+            </div>
+            <div class="small-3 columns">
+                <span class="postfix">Label</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="large-6 columns">
+        <div class="row collapse prefix-round">
+            <div class="small-3 columns">
+                <a href="#" class="button prefix">Go</a>
+            </div>
+            <div class="small-9 columns">
+                <input type="text" placeholder="Value">
+            </div>
+        </div>
+    </div>
+    <div class="large-6 columns">
+        <div class="row collapse postfix-round">
+            <div class="small-9 columns">
+                <input type="text" placeholder="Value">
+            </div>
+            <div class="small-3 columns">
+                <a href="#" class="button postfix">Go</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<?php
+echo Fnd_Html::submitButton();
+echo Fnd_form::end_form();
+
+echo Fnd_modal::end_modal();
+?>
+
 <div class="row">
     <div class="medium-12 columns">
 
