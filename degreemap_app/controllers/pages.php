@@ -14,7 +14,7 @@ class Pages extends CI_Controller {
      * 
      */
     public function index() {
-
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             //on form submit...
             //print_r($_POST);
@@ -25,10 +25,9 @@ class Pages extends CI_Controller {
         $data['student_lname'] = 'Scaperoth';
         $data['max_courses'] = $this->course_model->get_max_courses();
 
-
         $data['total_credits'] = $this->course_model->get_total_credits();
 
-        $data['semesters'] = $this->course_model->get_semesters();
+        $data['max_semesters'] = $this->course_model->get_max_semesters();
 
         $data['content'] = $this->load->view('pages/index', $data, true);
         $this->load->view('templates/layout', $data);

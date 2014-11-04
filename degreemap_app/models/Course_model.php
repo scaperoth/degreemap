@@ -2,6 +2,9 @@
 
 class Course_model extends CI_Model {
 
+    const MAX_COURSES_DEFAULT = 5;
+    const MAX_SEMESTERS_DEFAULT = 7;
+
     public function __construct() {
 
         $this->load->database();
@@ -20,13 +23,13 @@ class Course_model extends CI_Model {
 
         if ($position !== FALSE) {
             $query = "SELECT title, semester, credits, description, link, labelcolor, labelmessage, position "
-                    . "FROM courses"
+                    . "FROM courses "
                     . "WHERE semester = ? AND position = ?;";
             $result = $this->db->query($query, array($semester, $position));
-            if (is_object($result))
-                return $result;
-            else
+            if ($result === FALSE || empty($result->first_row()))
                 return FALSE;
+            else
+                return $result->first_row();
         }
 
         $this->db->order_by("position");
@@ -48,27 +51,38 @@ class Course_model extends CI_Model {
      * @return type
      */
     public function get_max_courses() {
-        $query = <<< QUERY
-        select max(position) as max_count from courses;
-QUERY;
+        $query = "select max(position) as max_count from courses;";
+        
         $result = $this->db->query($query);
-
-        if ($result->first_row()) {
+        
+        if ($result === FALSE || $result->first_row()->max_count === NULL)
+            return self::MAX_COURSES_DEFAULT;
+        else
             return $result->first_row()->max_count;
-        } else
-            return 0;
     }
-
+    
+    public function get_max_semesters(){
+        $query = "select max(semester) as max_semester from courses;";
+        
+        $result = $this->db->query($query);
+        
+        if ($result === FALSE || $result->first_row()->max_semester === NULL)
+            return self::MAX_SEMESTERS_DEFAULT;
+        else
+            return $result->first_row()->max_semester;
+    }
+    
     /**
      * 
      * @return type
      */
-    public function get_total_credits() {
+    public  function get_total_credits() {
         $result = $this->db->query("SELECT SUM(credits) as num_credits from courses;");
-        if ($result->first_row())
-            return $result->first_row()->num_credits;
-        else
+        if ($result === FALSE || $result->first_row()->num_credits === NULL)
             return 0;
+        else;
+            return $result->first_row()->num_credits;
+            
     }
 
     /**
