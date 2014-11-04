@@ -15,7 +15,6 @@ class Pages extends CI_Controller {
      * 
      */
     public function index() {
-
         $data['student_fname'] = 'Matt';
         $data['student_lname'] = 'Scaperoth';
         $data['max_courses'] = $this->course_model->get_max_courses();
@@ -28,6 +27,5 @@ class Pages extends CI_Controller {
         $this->load->view("pages/index", $data);
         $this->load->view('templates/footer');
     }
-
 
 }
