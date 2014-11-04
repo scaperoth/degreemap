@@ -1,5 +1,5 @@
 <?php
-
+ 
 class Course_model extends CI_Model {
     
     //default constants in case there is no table data
