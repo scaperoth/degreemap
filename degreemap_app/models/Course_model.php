@@ -1,6 +1,9 @@
 <?php
  
 class Course_model extends CI_Model {
+    //grid constants. they are initialized at 1
+    const MIN_SEMESTERS = 1;
+    const MIN_POSITION = 1;
     
     //default constants in case there is no table data
     const MAX_COURSES_DEFAULT = 5;

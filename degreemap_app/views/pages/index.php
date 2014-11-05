@@ -143,9 +143,9 @@ echo Fnd_modal::end_modal();
             </tr>
             </thead>
             <tbody>
-                <?php for ($semester = 1; $semester <= $max_semesters; $semester++): ?>
+                <?php for ($semester = Course_model::MIN_SEMESTERS; $semester <= $max_semesters; $semester++): ?>
                     <?php
-                    $this_semester_courses = $this->course_model->get_courses($semester);
+                    $this_semester_courses = Course_model::get_courses($semester);
                     $semester_credits = 0;
                     ?>
                     <tr>
@@ -153,9 +153,9 @@ echo Fnd_modal::end_modal();
                             <p align="center"><?php echo $semester; ?></p>
                         </td>
                         <?php
-                        for ($position = 1; $position <= $max_courses; $position++):
+                        for ($position = Course_model::MIN_POSITION; $position <= $max_courses; $position++):
                             ?>
-                            <?php $course = $this->course_model->get_courses($semester, $position); ?>
+                            <?php $course = Course_model::get_courses($semester, $position); ?>
                             <?php if ($course !== FALSE): ?>
                                 <td align="center">
                                     <h5>

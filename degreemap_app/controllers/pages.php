@@ -14,23 +14,22 @@ class Pages extends CI_Controller {
      * 
      */
     public function index() {
-        
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
             //on form submit...
             //print_r($_POST);
         }
-
+        $model = new Course_model();
+        
         $data['title'] = 'DegreeMap';
         $data['student_fname'] = 'Matt';
         $data['student_lname'] = 'Scaperoth';
-        
-        $data['min_semesters'] = $this->course_model->MIN_SEMESTERS;
-        $data['min_position'] = $this->course_model->MIN_POSITION;
-        $data['max_courses'] = $this->course_model->get_max_courses();
 
-        $data['total_credits'] = $this->course_model->get_total_credits();
-
-        $data['max_semesters'] = $this->course_model->get_max_semesters();
+        $data['min_semesters'] = $model::MIN_SEMESTERS;
+        $data['min_position'] = $model::MIN_POSITION;
+        $data['max_courses'] = $model::get_max_courses();
+        $data['total_credits'] = $model::get_total_credits();
+        $data['max_semesters'] = $model::get_max_semesters();
 
         $data['content'] = $this->load->view('pages/index', $data, true);
         $this->load->view('templates/layout', $data);
