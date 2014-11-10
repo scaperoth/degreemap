@@ -1,4 +1,27 @@
 
+<style>
+/*CUSTOM TABLE CELLS*/
+.cell_head{
+    width:70%;
+    margin:0 auto;
+    height:30px;
+    margin-top:20px;
+}
+.cell_body{
+    height:140px;
+    width:80%;
+    margin:0 auto;
+}    
+
+.course{
+    padding:10px;
+}
+
+.columns{
+    padding:0;
+}
+</style>
+
 <div class="row">
 
     <div class="medium-10 columns medium-centered">
@@ -36,7 +59,7 @@
                 ?>
                 <div class="row">
                     <ul class="ch-grid">
-                        <li class="medium-1 columns ">
+                        <li class="medium-1 columns middle">
                             <h2 align="center"><?php echo $semester; ?></h2>
                         </li>
                         <?php
@@ -56,7 +79,11 @@
                                                         </a> 
                                                         (<?php echo $course->credits; ?>)
                                                     </h5>
-                                                    
+                                                    <h5 class="subheader cell_body">
+                                                        <small>
+                                                            <?php echo $course->description; ?>
+                                                        </small>
+                                                    </h5>
                                                     <div class="cell_footer <?php echo $course->labelcolor; ?> label " >
                                                         <h4>
                                                             <?php echo $course->labelmessage; ?>
@@ -64,11 +91,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="ch-info-back">
-                                                    <h5 class="subheader cell_body">
-                                                        <small>
-                                                            <?php echo $course->description; ?>
-                                                        </small>
-                                                    </h5>
+
                                                 </div>
                                             </div>	
                                         </div>
@@ -86,7 +109,7 @@
                         <?php endfor; ?>
                         <li class="medium-1 columns middle text-center">
 
-                            <p><?php echo $semester_credits; ?></p>
+                            <h2><?php echo $semester_credits; ?></h2>
 
                         </li>
                     </ul>
