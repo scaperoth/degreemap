@@ -19,6 +19,8 @@
 </div>
 
 <?php
+
+echo site_url("pages/notable");
 echo Fnd_modal::start_modal(array(
     'id' => 'myModal',
         ), array(
