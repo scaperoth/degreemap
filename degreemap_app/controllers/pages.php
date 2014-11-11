@@ -80,6 +80,5 @@ class Pages extends CI_Controller {
         $this->load->view('templates/full_layout', $data);
     }
     
-    
 
 }

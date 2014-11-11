@@ -23,8 +23,6 @@
                 <?php echo $content; ?>
             </div>
         </div>
-
-
         <hr/>
         <footer>
             <h3 class="subheader text-center">
@@ -35,6 +33,7 @@
         </footer>
         <script src="<?php echo base_url(); ?>assets/js/vendor/jquery.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/foundation.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/js/custom.js"></script>
         <script>
             $(document).foundation();
         </script>

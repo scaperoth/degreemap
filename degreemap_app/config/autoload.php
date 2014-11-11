@@ -84,6 +84,7 @@ if ($handle = opendir($path)) {
 
 $autoload['helper'] = array(
     'url',
+    'form',
 );
 
 

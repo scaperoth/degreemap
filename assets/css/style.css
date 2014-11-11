@@ -221,7 +221,7 @@ CSS HOVER EFFECTS
     color: rgba(255,242,34, 0.8);
 }
 
-.ch-item:hover .ch-info-front {
+.ch-item.flip .ch-info-front {
     -webkit-transform: translate3d(0,280px,0) rotate3d(1,0,0,-90deg);
     -moz-transform: translate3d(0,280px,0) rotate3d(1,0,0,-90deg);
     -o-transform: translate3d(0,280px,0) rotate3d(1,0,0,-90deg);
@@ -230,13 +230,41 @@ CSS HOVER EFFECTS
     opacity: 0;
 }
 
-.ch-item:hover .ch-info-back {
+.ch-item.flip .ch-info-back {
     -webkit-transform: rotate3d(1,0,0,0deg);
     -moz-transform: rotate3d(1,0,0,0deg);
     -o-transform: rotate3d(1,0,0,0deg);
     -ms-transform: rotate3d(1,0,0,0deg);
     transform: rotate3d(1,0,0,0deg);
     opacity: 1;
+}
+
+.settings-icon, .return-icon{
+    padding-right:2px;
+    color:#fff;
+}
+
+.settings-icon:hover, .return-icon:hover{
+    cursor: pointer;
+    color: #999;
+    /* Firefox */
+    -moz-transition: all .3s ease-in;
+    /* WebKit */
+    -webkit-transition: all .3s ease-in;
+    /* Opera */
+    -o-transition: all .3s ease-in;
+    /* Standard */
+    transition: all .3s ease-in;
+    
+}
+
+
+/*************
+FORMS
+*************/
+.delete-form{
+    position:relative;
+    margin-top:33%;
 }
 
 /*************

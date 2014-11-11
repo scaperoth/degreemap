@@ -1,10 +1,10 @@
 <?php
- 
+
 class Course_model extends CI_Model {
+
     //grid constants. they are initialized at 1
     const MIN_SEMESTERS = 1;
     const MIN_POSITION = 1;
-    
     //default constants in case there is no table data
     const MAX_COURSES_DEFAULT = 5;
     const MAX_SEMESTERS_DEFAULT = 7;
@@ -68,7 +68,7 @@ class Course_model extends CI_Model {
         else
             return $result->first_row()->max_count;
     }
-    
+
     /**
      * 
      * @return maximum number of semesters. May default to constant if table is empty
@@ -95,6 +95,23 @@ class Course_model extends CI_Model {
         
             else;
         return $result->first_row()->num_credits;
+    }
+    
+    /**
+     * forms string of DELETE FROM $table_name WHERE 'key'= 'value'  
+     * @param string $table_name name of table to delete from 
+     * @param array $field_value array of field=>value
+     * @return boolean of success
+     */
+    public function delete($table_name, $field_value = array('' => '')) {
+        $query = $this->db->delete($table_name, $field_value);
+        
+        if ($query)
+            $result = TRUE;
+        else
+            $result = FALSE;
+
+        return $result;
     }
 
     /**

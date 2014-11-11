@@ -1,25 +1,27 @@
 
 <style>
-/*CUSTOM TABLE CELLS*/
-.cell_head{
-    width:70%;
-    margin:0 auto;
-    height:30px;
-    margin-top:20px;
-}
-.cell_body{
-    height:140px;
-    width:80%;
-    margin:0 auto;
-}    
+    /*CUSTOM TABLE CELLS*/
+    .cell_head{
+        width:70%;
+        margin:0 auto;
+        height:30px;
+        margin-top:20px;
+    }
+    .cell_body{
+        height:140px;
+        width:80%;
+        margin:0 auto;
+    }    
+    @media only screen and (min-width: 64.063em){
+        .course{
+            padding:10px;
+            width:<?php echo (floor(80 / $max_courses) - .5); ?>%;
+        }
+    }
 
-.course{
-    padding:10px;
-}
-
-.columns{
-    padding:0;
-}
+    .columns{
+        padding:0;
+    }
 </style>
 
 <div class="row">
@@ -59,7 +61,7 @@
                 ?>
                 <div class="row">
                     <ul class="ch-grid">
-                        <li class="medium-1 columns middle">
+                        <li class="small-12 medium-1 columns middle">
                             <h2 align="center"><?php echo $semester; ?></h2>
                         </li>
                         <?php
@@ -67,12 +69,12 @@
                             ?>
                             <?php $course = Course_model::get_courses($semester, $position); ?>
                             <?php if ($course !== FALSE): ?>
-                                <li class="medium-2 columns course" style="width:<?php echo (floor(80 / $max_courses) - .5); ?>%;">
+                                <li class="small-12 medium-12 columns course" >
                                     <div class="ch-item ch-img-<?php echo $semester; ?>"  >				
                                         <div class="ch-info-wrap">
                                             <div class="ch-info">
                                                 <div class="ch-info-front ch-img-<?php echo $semester; ?>"  >
-
+                                                    <i class="fi-widget right settings-icon" ></i>
                                                     <h5 class="cell_head">
                                                         <a target="blank" href="<?php echo $course->link; ?>">
                                                             <?php echo $course->title; ?> 
@@ -91,7 +93,34 @@
                                                     </div>
                                                 </div>
                                                 <div class="ch-info-back">
+                                                    <i class="fi-x right return-icon" ></i>
 
+                                                    <?php
+                                                    $attr = 'id="delete_course_form" class="delete-form"'; //The form will have the id 'my_form'
+                                                    echo form_open('forms/delete', $attr);
+                                                    $data = array(
+                                                        'name' => 'field',
+                                                        'id' => 'delete_field',
+                                                        'class'=> 'hidden-for-small-up',
+                                                        'value' => 'title'
+                                                    );
+                                                    echo form_input($data);
+                                                    $data = array(
+                                                        'name' => 'value',
+                                                        'id' => 'delete_value',
+                                                        'class'=> 'hidden-for-small-up',
+                                                        'value' =>  $course->title,
+                                                    );
+                                                    echo form_input($data);
+                                                    $data = array(
+                                                        'type'=>'Submit',
+                                                        'id' => 'delete_field',
+                                                        'class'=> 'button alert',
+                                                        'value' => 'Delete'
+                                                    );
+                                                    echo form_input($data);
+                                                    echo form_close();
+                                                    ?>
                                                 </div>
                                             </div>	
                                         </div>
