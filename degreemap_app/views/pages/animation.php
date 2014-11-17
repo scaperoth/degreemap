@@ -58,6 +58,7 @@
                 <?php
                 $this_semester_courses = Course_model::get_courses($semester);
                 $semester_credits = 0;
+                $full_courses = TRUE;
                 ?>
                 <div class="row">
                     <ul class="ch-grid">
@@ -101,21 +102,21 @@
                                                     $data = array(
                                                         'name' => 'field',
                                                         'id' => 'delete_field',
-                                                        'class'=> 'hidden-for-small-up',
+                                                        'class' => 'hidden-for-small-up',
                                                         'value' => 'title'
                                                     );
                                                     echo form_input($data);
                                                     $data = array(
                                                         'name' => 'value',
                                                         'id' => 'delete_value',
-                                                        'class'=> 'hidden-for-small-up',
-                                                        'value' =>  $course->title,
+                                                        'class' => 'hidden-for-small-up',
+                                                        'value' => $course->title,
                                                     );
                                                     echo form_input($data);
                                                     $data = array(
-                                                        'type'=>'Submit',
+                                                        'type' => 'Submit',
                                                         'id' => 'delete_field',
-                                                        'class'=> 'button alert',
+                                                        'class' => 'button alert',
                                                         'value' => 'Delete'
                                                     );
                                                     echo form_input($data);
@@ -131,11 +132,23 @@
                                 $semester_credits += $course->credits;
                                 ?>
                             <?php else: ?>
-                                <li class="medium-2 columns" style="width:<?php echo (floor(80 / $max_courses) - .5); ?>%;">
-
+                                <?php $full_courses = FALSE; ?>
+                                <li class="medium-2 columns middle" style="width:<?php echo (floor(80 / $max_courses) - .5); ?>%;">
+                                    <a href="#">
+                                        <i class="fi-plus large green"></i>
+                                    </a>
                                 </li>
                             <?php endif; ?>
                         <?php endfor; ?>
+                        <?php if ($full_courses): ?>
+                            <li class="medium-1 columns middle text-center" style="width:2%;">
+
+                                <a href="#">
+                                    <i class="fi-plus small green"></i>
+                                </a>
+
+                            </li>
+                        <?php endif; ?>
                         <li class="medium-1 columns middle text-center">
 
                             <h2><?php echo $semester_credits; ?></h2>
