@@ -6,6 +6,7 @@
         <title><?php echo $student_fname . "'s " . $title; ?> | Welcome</title>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/foundation.min.css" />
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/foundation-icons.css" />
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/gridster/stylesheets/gridster.css" />
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css" />
         <script src="<?php echo base_url(); ?>assets/js/vendor/modernizr.js"></script>
     </head>
@@ -33,9 +34,19 @@
         </footer>
         <script src="<?php echo base_url(); ?>assets/js/vendor/jquery.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/foundation.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/vendor/gridster/javascripts/gridster.js"></script>
         <script src="<?php echo base_url(); ?>assets/js/custom.js"></script>
         <script>
-            $(document).foundation();
+            $(function () { //DOM Ready
+
+                $(document).foundation();
+                $(".gridster ul").gridster({
+                    widget_margins: [10, 10],
+                    widget_base_dimensions: [140, 140]
+                });
+
+            });
+
         </script>
     </body>
 </html>

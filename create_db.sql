@@ -5,15 +5,15 @@
 #GRANT ALL ON degreemap.* TO 'degreemapuser'@'localhost';
 
 CREATE TABLE IF NOT EXISTS `degreemap`.`courses` (
-  `title` VARCHAR(45) NOT NULL,
   `semester` INT(1) NOT NULL,
-  `credits` INT(1) NOT NULL,
-  `description` TEXT NULL,
-  `link` TEXT NOT NULL,
-  `labelcolor` VARCHAR(20) NOT NULL,
-  `labelmessage` VARCHAR(45) NOT NULL,
   `position` INT(1) NOT NULL,
-  PRIMARY KEY (`title`))
+  `title` VARCHAR(45) ,
+  `credits` INT(1) ,
+  `description` TEXT NULL,
+  `link` TEXT NULL,
+  `labelcolor` VARCHAR(20) ,
+  `labelmessage` VARCHAR(45) ,
+  PRIMARY KEY (`position`, `semester`))
 ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `degreemap`.`student` (

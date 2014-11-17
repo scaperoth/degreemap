@@ -70,7 +70,7 @@
                             ?>
                             <?php $course = Course_model::get_courses($semester, $position); ?>
                             <?php if ($course !== FALSE): ?>
-                                <li class="small-12 medium-12 columns course" >
+                                <li class="small-12 medium-12 columns course" id="<?php echo $semester . $position; ?>" >
                                     <div class="ch-item ch-img-<?php echo $semester; ?>"  >				
                                         <div class="ch-info-wrap">
                                             <div class="ch-info">
@@ -101,16 +101,26 @@
                                                     echo form_open('forms/delete', $attr);
                                                     $data = array(
                                                         'name' => 'field',
-                                                        'id' => 'delete_field',
                                                         'class' => 'hidden-for-small-up',
                                                         'value' => 'title'
                                                     );
                                                     echo form_input($data);
                                                     $data = array(
                                                         'name' => 'value',
-                                                        'id' => 'delete_value',
                                                         'class' => 'hidden-for-small-up',
                                                         'value' => $course->title,
+                                                    );
+                                                    echo form_input($data);
+                                                    $data = array(
+                                                        'name' => 'semester',
+                                                        'class' => 'hidden-for-small-up',
+                                                        'value' => $semester
+                                                    );
+                                                    echo form_input($data);
+                                                    $data = array(
+                                                        'name' => 'position',
+                                                        'class' => 'hidden-for-small-up',
+                                                        'value' => $position
                                                     );
                                                     echo form_input($data);
                                                     $data = array(
@@ -141,11 +151,34 @@
                             <?php endif; ?>
                         <?php endfor; ?>
                         <?php if ($full_courses): ?>
-                            <li class="medium-1 columns middle text-center" style="width:2%;">
+                            <li class="medium-1 columns middle text-center" id="<?php echo $semester . $position . "smallplus" ?>" style="width:2%;">
 
-                                <a href="#">
-                                    <i class="fi-plus small green"></i>
-                                </a>
+                                <?php
+                                $gridlocation = $semester . $position;
+                                $attr = 'id="add_course_form' . $gridlocation . '" class="add-form"'; //The form will have the id 'my_form'
+                                echo form_open('forms/add', $attr);
+                                $data = array(
+                                    'name' => 'semester',
+                                    'class' => 'hidden-for-small-up',
+                                    'value' => $semester
+                                );
+                                echo form_input($data);
+                                $data = array(
+                                    'name' => 'position',
+                                    'class' => 'hidden-for-small-up',
+                                    'value' => $position
+                                );
+                                echo form_input($data);
+                                $data = array(
+                                    'type' => 'Submit',
+                                    'class' => 'icon-button padding-left15 padding-right15 gray',
+                                    'title'=> 'Add a new course',
+                                    'content' => '<i class="fi-arrow-right small white"></i>',
+                                    'value' => 'Delete'
+                                );
+                                echo form_button($data);
+                                echo form_close();
+                                ?>
 
                             </li>
                         <?php endif; ?>

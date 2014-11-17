@@ -80,5 +80,26 @@ class Pages extends CI_Controller {
         $this->load->view('templates/full_layout', $data);
     }
     
+    /**
+     * 
+     */
+    public function grid() {
+
+        $model = new Course_model();
+        
+        $data['title'] = 'DegreeMap';
+        $data['student_fname'] = 'Matt';
+        $data['student_lname'] = 'Scaperoth';
+
+        $data['min_semesters'] = $model::MIN_SEMESTERS;
+        $data['min_position'] = $model::MIN_POSITION;
+        $data['max_courses'] = $model::get_max_courses();
+        $data['total_credits'] = $model::get_total_credits();
+        $data['max_semesters'] = $model::get_max_semesters();
+
+        $data['content'] = $this->load->view('pages/grid', $data, true);
+        $this->load->view('templates/full_layout', $data);
+    }
+    
 
 }

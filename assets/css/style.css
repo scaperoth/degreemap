@@ -39,6 +39,185 @@ LAYOUTS
     width:4%;
 }
 
+/*PADDING*/
+.padding-left0{
+    padding-left:0;
+}
+.padding-left5{
+    padding-left:5px;
+}
+.padding-left10{
+    padding-left:10px;
+}
+.padding-left15{
+    padding-left:15px;
+}
+
+.padding-right0{
+    padding-right:0;
+}
+.padding-right5{
+    padding-right:5px;
+}
+.padding-right10{
+    padding-right:10px;
+}
+.padding-right15{
+    padding-right:15px;
+}
+
+.padding-top0{
+    padding-top:0;
+}
+.padding-top5{
+    padding-top:5px;
+}
+.padding-top10{
+    padding-top:10px;
+}
+.padding-top15{
+    padding-top:15px;
+}
+
+.padding-bottom0{
+    padding-bottom:0;
+}
+.padding-bottom5{
+    padding-bottom:5px;
+}
+.padding-bottom10{
+    padding-bottom:10px;
+}
+.padding-bottom15{
+    padding-bottom:15px;
+}
+
+/*MARGINS*/
+.margin-left0{
+    margin-left:0;
+}
+.margin-left5{
+    margin-left:5px;
+}
+.margin-left10{
+    margin-left:10px;
+}
+.margin-left15{
+    margin-left:15px;
+}
+
+.margin-right0{
+    margin-right:0;
+}
+.margin-right5{
+    margin-right:5px;
+}
+.margin-right10{
+    margin-right:10px;
+}
+.margin-right15{
+    margin-left:15px;
+}
+
+.margin-top0{
+    margin-top:0;
+}
+.margin-top5{
+    margin-top:5px;
+}
+.margin-top10{
+    margin-top:10px;
+}
+.margin-top15{
+    margin-top:15px;
+}
+
+.margin-bottom0{
+    margin-bottom:0;
+}
+.margin-bottom5{
+    margin-bottom:5px;
+}
+.margin-bottom10{
+    margin-bottom:10px;
+}
+.margin-bottom15{
+    margin-bottom:15px;
+}
+
+/*GRIDS*/
+.gridly {
+    position: relative;
+    width: 960px;
+}
+
+
+.grid {
+  position: relative; }
+  .grid .brick {
+    opacity: 1;
+    cursor: pointer;
+    position: relative; }
+    .grid .brick .delete {
+      display: block;
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      width: 40px;
+      height: 40px;
+      top: 0;
+      right: 0;
+      position: absolute;
+      text-align: center;
+      line-height: 40px; }
+    .grid .brick.small {
+      width: 140px;
+      height: 140px; }
+    .grid .brick.large {
+      width: 300px;
+      height: 300px; }
+    .grid .brick.dragging {
+      opacity: 0.8; }
+    .grid .brick:nth-child(20n + 1) {
+      background: #1abc9c; }
+    .grid .brick:nth-child(20n + 2) {
+      background: #16a085; }
+    .grid .brick:nth-child(20n + 3) {
+      background: #2ecc71; }
+    .grid .brick:nth-child(20n + 4) {
+      background: #27ae60; }
+    .grid .brick:nth-child(20n + 5) {
+      background: #3498db; }
+    .grid .brick:nth-child(20n + 6) {
+      background: #2980b9; }
+    .grid .brick:nth-child(20n + 7) {
+      background: #9b59b6; }
+    .grid .brick:nth-child(20n + 8) {
+      background: #8e44ad; }
+    .grid .brick:nth-child(20n + 9) {
+      background: #34495e; }
+    .grid .brick:nth-child(20n + 10) {
+      background: #2c3e50; }
+    .grid .brick:nth-child(20n + 11) {
+      background: #f1c40f; }
+    .grid .brick:nth-child(20n + 12) {
+      background: #f39c12; }
+    .grid .brick:nth-child(20n + 13) {
+      background: #e67e22; }
+    .grid .brick:nth-child(20n + 14) {
+      background: #d35400; }
+    .grid .brick:nth-child(20n + 15) {
+      background: #e74c3c; }
+    .grid .brick:nth-child(20n + 16) {
+      background: #c0392b; }
+    .grid .brick:nth-child(20n + 17) {
+      background: #ecf0f1; }
+    .grid .brick:nth-child(20n + 18) {
+      background: #bdc3c7; }
+    .grid .brick:nth-child(20n + 19) {
+      background: #95a5a6; }
+    .grid .brick:nth-child(20n + 20) {
+      background: #7f8c8d; }
+
 /*************
 TYPOGRAPHY
 *************/
@@ -57,12 +236,16 @@ h3 small a{
 }
 
 .large {
-font-size: 50px;
-line-height: 50px;
+    font-size: 50px;
+    line-height: 50px;
 }
 
 .green{
     color:#43ac6a;
+}
+
+.gray{
+    color:#bfbfbf;
 }
 /*************
 HEADER
@@ -263,7 +446,7 @@ CSS HOVER EFFECTS
     -o-transition: all .3s ease-in;
     /* Standard */
     transition: all .3s ease-in;
-    
+
 }
 
 
@@ -274,6 +457,18 @@ FORMS
     position:relative;
     margin-top:33%;
 }
+
+/*submit icon buttom*/
+button.icon-button{
+    background:none;
+    border-radius:50px;
+}
+.icon-button:hover{
+    background-color:#92d898;
+    color: #fff;
+    transition: background-color 300ms ease-out;
+}
+
 
 /*************
 FOOTER

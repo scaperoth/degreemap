@@ -18,44 +18,18 @@ class Forms extends CI_Controller {
      * @return boolean
      */
     public function delete() {
-        //Load library form_validation
-        $this->load->library('form_validation');
-
-        //Set some validation rules
-        $this->form_validation->set_rules('field', 'required|xss_clean');
-        $this->form->validation->set_rules('value', 'required|xss_clean');
-
-        if ($this->form_validation->run()) {
-            //Do whatever is needed to process the form and store the data
-            // ...
-
-            $noerror = $this->processing_tasks();
-            if (IS_AJAX) {
-                if ($no_error) {
-                    $field = $_POST['field'];
-                    $value = $_POST['value'];
-                    /*
-                      if ($model::delete('courses', array($field => $value))) {
-                      return TRUE;
-                      } else
-                      return FALSE;
-                     * 
-                     */
-                    return $value;
-                } else {
-                    echo "Ooops! There was some problem trying to process the form";
-                }
-            } else {
-                //Load standard view
-            }
+        $model = new Course_model();
+        if (isset($_POST['field']) && isset($_POST['value'])) {
+            $field = $_POST['field'];
+            $value = $_POST['value'];
+            if (TRUE){//$model::delete('courses', array($field => $value))) {
+                $return = json_encode(array('result'=>'DONE', 'semester' => $_POST['semester'], 'position' => $_POST['position']));
+            } else
+                $return = json_encode(array('result'=>'FAIL'));
+            echo $return;
         } else {
-            //The form is not valid
-            if (IS_AJAX) {
-                $message = validation_errors();
-                echo $message;
-            } else {
-                //Load standard view
-            }
+            echo "Ooops! Not the proper request.";
+            //redirect("pages/animation");
         }
     }
 
