@@ -283,6 +283,50 @@ table thead tr th, table tbody tr td{
 .cell_body{
     height:100px;
 }
+.cell_body:hover{
+}
+
+.cell_footer{
+    margin:0 auto;
+}
+
+.course .course_section{
+}
+
+
+.course .course_section:hover span, .course .course_section.label:hover h4 span {
+    border:1px solid #ccc;
+    cursor:text;
+}
+
+.settings-icon, .return-icon {
+    padding-right:2px;
+    color:#fff;
+}
+
+.status-nav{
+    color:#444;
+}
+
+.settings-icon:hover, .return-icon:hover, .status-nav:hover{
+    cursor: pointer;
+    /* Firefox */
+    -moz-transition: all .3s ease-in;
+    /* WebKit */
+    -webkit-transition: all .3s ease-in;
+    /* Opera */
+    -o-transition: all .3s ease-in;
+    /* Standard */
+    transition: all .3s ease-in;
+}
+
+.settings-icon:hover, .return-icon:hover{
+    color:#999;
+}
+
+.status-nav:hover{
+    color:#444;
+}
 
 /*******************
 CSS HOVER EFFECTS
@@ -430,24 +474,6 @@ CSS HOVER EFFECTS
     opacity: 1;
 }
 
-.settings-icon, .return-icon{
-    padding-right:2px;
-    color:#fff;
-}
-
-.settings-icon:hover, .return-icon:hover{
-    cursor: pointer;
-    color: #999;
-    /* Firefox */
-    -moz-transition: all .3s ease-in;
-    /* WebKit */
-    -webkit-transition: all .3s ease-in;
-    /* Opera */
-    -o-transition: all .3s ease-in;
-    /* Standard */
-    transition: all .3s ease-in;
-
-}
 
 
 /*************
@@ -455,7 +481,14 @@ FORMS
 *************/
 .delete-form{
     position:relative;
-    margin-top:33%;
+    margin:20% auto 0;
+}
+
+.edit-form{
+    position:relative;
+    width:100px;
+    margin:0 auto;
+    text-align:center;
 }
 
 /*submit icon buttom*/

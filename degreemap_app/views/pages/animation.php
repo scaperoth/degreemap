@@ -48,7 +48,7 @@
 <div class="row">
     <div class="medium-10 columns medium-centered ">
         <div class="row">
-            <div class="medium-12 columns text-center" >
+            <div class=" columns text-center" >
                 <h3>Total Credits<br /><?php echo $total_credits; ?></h3>
             </div>
         </div>
@@ -62,7 +62,7 @@
                 ?>
                 <div class="row">
                     <ul class="ch-grid">
-                        <li class="small-12 medium-1 columns middle">
+                        <li class="medium-1 columns middle" style="width:5%;">
                             <h2 align="center"><?php echo $semester; ?></h2>
                         </li>
                         <?php
@@ -70,34 +70,47 @@
                             ?>
                             <?php $course = Course_model::get_courses($semester, $position); ?>
                             <?php if ($course !== FALSE): ?>
-                                <li class="small-12 medium-12 columns course" id="<?php echo $semester . $position; ?>" >
+                                <li class="columns course" id="<?php echo $semester . $position; ?>" >
                                     <div class="ch-item ch-img-<?php echo $semester; ?>"  >				
                                         <div class="ch-info-wrap">
                                             <div class="ch-info">
                                                 <div class="ch-info-front ch-img-<?php echo $semester; ?>"  >
-                                                    <i class="fi-widget right settings-icon" ></i>
-                                                    <h5 class="cell_head">
+                                                    <i class="fi-widget right settings-icon "  ></i>
+                                                    <h5 class="cell_head course_section">
                                                         <a target="blank" href="<?php echo $course->link; ?>">
-                                                            <?php echo $course->title; ?> 
-                                                        </a> 
-                                                        (<?php echo $course->credits; ?>)
+                                                            <i class="fi-link  " ></i>
+                                                        </a>
+                                                        <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="title" contenteditable="true">
+                                                            <?php echo $course->title; ?>
+                                                        </span>
+                                                        (<span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="credits" contenteditable="true">
+                                                            <?php echo $course->credits; ?>
+                                                        </span>)
                                                     </h5>
-                                                    <h5 class="subheader cell_body">
+                                                    <div class="clearfix"></div>
+                                                    <h5 class="subheader cell_body course_section">
                                                         <small>
-                                                            <?php echo $course->description; ?>
+                                                            <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="description" contenteditable="true">
+                                                                <?php echo $course->description; ?>
+                                                            </span>
                                                         </small>
                                                     </h5>
-                                                    <div class="cell_footer <?php echo $course->labelcolor; ?> label " >
-                                                        <h4>
-                                                            <?php echo $course->labelmessage; ?>
-                                                        </h4>
+                                                    <div class="cell_footer course_section " >
+                                                        <div class=" <?php echo $course->labelcolor; ?> label ">
+                                                            <h4>
+                                                                <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="labelmessage" contenteditable="true">
+                                                                    <?php echo $course->labelmessage; ?>
+                                                                </span>
+                                                            </h4>
+                                                        </div>
+                                                            <i data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-color="<?php echo $course->labelcolor; ?>" class="fi-paint-bucket  status-nav" title="change status color"></i>
                                                     </div>
                                                 </div>
                                                 <div class="ch-info-back">
                                                     <i class="fi-x right return-icon" ></i>
 
                                                     <?php
-                                                    $attr = 'id="delete_course_form" class="delete-form"'; //The form will have the id 'my_form'
+                                                    $attr = 'id="delete_course_form' . $semester . $position . '" class="delete-form"'; //The form will have the id 'my_form'
                                                     echo form_open('forms/delete', $attr);
                                                     $data = array(
                                                         'name' => 'field',
@@ -132,6 +145,7 @@
                                                     echo form_input($data);
                                                     echo form_close();
                                                     ?>
+
                                                 </div>
                                             </div>	
                                         </div>
@@ -143,7 +157,7 @@
                                 ?>
                             <?php else: ?>
                                 <?php $full_courses = FALSE; ?>
-                                <li class="medium-2 columns middle" style="width:<?php echo (floor(80 / $max_courses) - .5); ?>%;">
+                                <li class="medium-1 columns middle" style="width:<?php echo (floor(80 / $max_courses) - .5); ?>%;">
                                     <a href="#">
                                         <i class="fi-plus large green"></i>
                                     </a>
@@ -151,7 +165,7 @@
                             <?php endif; ?>
                         <?php endfor; ?>
                         <?php if ($full_courses): ?>
-                            <li class="medium-1 columns middle text-center" id="<?php echo $semester . $position . "smallplus" ?>" style="width:2%;">
+                            <li class="medium-1 columns middle text-center" id="<?php echo $semester . $position . "smallplus" ?>" style="width:1%;">
 
                                 <?php
                                 $gridlocation = $semester . $position;
@@ -172,8 +186,8 @@
                                 $data = array(
                                     'type' => 'Submit',
                                     'class' => 'icon-button padding-left15 padding-right15 gray',
-                                    'title'=> 'Add a new course',
-                                    'content' => '<i class="fi-arrow-right small white"></i>',
+                                    'title' => 'Add a new course',
+                                    'content' => '<i class="fi-plus small green"></i>',
                                     'value' => 'Delete'
                                 );
                                 echo form_button($data);

@@ -1,6 +1,7 @@
 <?php
 
-class Course_model extends CI_Model {
+class Course_model extends CI_Model
+{
 
     //grid constants. they are initialized at 1
     const MIN_SEMESTERS = 1;
@@ -9,7 +10,8 @@ class Course_model extends CI_Model {
     const MAX_COURSES_DEFAULT = 5;
     const MAX_SEMESTERS_DEFAULT = 7;
 
-    public function __construct() {
+    public function __construct()
+    {
 
         $this->load->database();
     }
@@ -23,13 +25,16 @@ class Course_model extends CI_Model {
      * @return query object row return a specific semester's worth of courses by providing the semester 
      * @return db object of all courses a specific course by providing its semester and grid position.
      */
-    public function get_courses($semester = FALSE, $position = FALSE) {
-        if ($semester === FALSE) {
+    public function get_courses($semester = FALSE, $position = FALSE)
+    {
+        if ($semester === FALSE)
+        {
             $query = $this->db->get('courses');
             return $query->result_array();
         }
 
-        if ($position !== FALSE) {
+        if ($position !== FALSE)
+        {
             $query = "SELECT title, semester, credits, description, link, labelcolor, labelmessage, position "
                     . "FROM courses "
                     . "WHERE semester = ? AND position = ?;";
@@ -49,7 +54,8 @@ class Course_model extends CI_Model {
      * 
      * @return query object of semesters (integers)
      */
-    public function get_semesters() {
+    public function get_semesters()
+    {
         $query = "select semester from courses group by semester";
         return $this->db->query($query);
     }
@@ -58,7 +64,8 @@ class Course_model extends CI_Model {
      * 
      * @return max number of courses for any semester. May default to constant if table is empty 
      */
-    public function get_max_courses() {
+    public function get_max_courses()
+    {
         $query = "select max(position) as max_count from courses;";
 
         $result = $this->db->query($query);
@@ -73,7 +80,8 @@ class Course_model extends CI_Model {
      * 
      * @return maximum number of semesters. May default to constant if table is empty
      */
-    public function get_max_semesters() {
+    public function get_max_semesters()
+    {
         $query = "select max(semester) as max_semester from courses;";
 
         $result = $this->db->query($query);
@@ -88,7 +96,8 @@ class Course_model extends CI_Model {
      * 
      * @return type
      */
-    public function get_total_credits() {
+    public function get_total_credits()
+    {
         $result = $this->db->query("SELECT SUM(credits) as num_credits from courses;");
         if ($result === FALSE || $result->first_row()->num_credits === NULL)
             return 0;
@@ -96,16 +105,17 @@ class Course_model extends CI_Model {
             else;
         return $result->first_row()->num_credits;
     }
-    
+
     /**
      * forms string of DELETE FROM $table_name WHERE 'key'= 'value'  
      * @param string $table_name name of table to delete from 
      * @param array $field_value array of field=>value
      * @return boolean of success
      */
-    public function delete($table_name, $field_value = array('' => '')) {
+    public function delete($table_name, $field_value = array('' => ''))
+    {
         $query = $this->db->delete($table_name, $field_value);
-        
+
         if ($query)
             $result = TRUE;
         else
@@ -114,12 +124,25 @@ class Course_model extends CI_Model {
         return $result;
     }
 
+    public function update($table_name, $field_value = array('' => ''))
+    {
+        $data = array(
+            $field_value['field'] => $field_value['value'],
+        );
+        
+        $this->db->where('semester', $field_value['semester']);
+        $this->db->where('position', $field_value['position']);
+        $this->db->update($table_name, $data);
+    }
+
     /**
      * 
      */
-    public function putTest() {
+    public function putTest()
+    {
         $t = $this->get_array();
-        foreach ($t as $k => $v) {
+        foreach ($t as $k => $v)
+        {
             $query = "INSERT INTO `courses` (`title`," .
                     '`' . implode("`,`", array_keys($v)) . '`' .
                     ") VALUES ('$k'," .
@@ -129,7 +152,8 @@ class Course_model extends CI_Model {
         }
     }
 
-    public function get_array() {
+    public function get_array()
+    {
         $degreedata = array(
             "H/SS 1" => array(
                 "semester" => 1,
