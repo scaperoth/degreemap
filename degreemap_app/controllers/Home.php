@@ -3,27 +3,61 @@
 /**
  * 
  */
-class Pages extends CI_Controller {
+class Home extends MY_Controller
+{
 
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('course_model');
+    /**
+     * 
+     */
+    public function index()
+    {
+        $session_data = $this->session->userdata('logged_in');
+
+        $data['username'] = $session_data['username'];
+
+        $model = new CourseModel();
+
+        $data['min_semesters'] = $model::MIN_SEMESTERS;
+        $data['min_position'] = $model::MIN_POSITION;
+        $data['max_courses'] = $model::get_max_courses();
+        $data['total_credits'] = $model::get_total_credits();
+        $data['max_semesters'] = $model::get_max_semesters();
+
+        $data['content'] = $this->load->view('home/index', $data, true);
+        $this->load->view('templates/full_layout', $data);
     }
 
     /**
      * 
      */
-    public function index() {
+    public function notable()
+    {
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST)) {
+        $model = new CourseModel();
+
+
+        $data['min_semesters'] = $model::MIN_SEMESTERS;
+        $data['min_position'] = $model::MIN_POSITION;
+        $data['max_courses'] = $model::get_max_courses();
+        $data['total_credits'] = $model::get_total_credits();
+        $data['max_semesters'] = $model::get_max_semesters();
+
+        $data['content'] = $this->load->view('home/notable', $data, true);
+        $this->load->view('templates/full_layout', $data);
+    }
+
+    /**
+     * 
+     */
+    public function animation()
+    {
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST))
+        {
             //on form submit...
             //print_r($_POST);
         }
-        $model = new Course_model();
-        
-        $data['title'] = 'DegreeMap';
-        $data['student_fname'] = 'Matt';
-        $data['student_lname'] = 'Scaperoth';
+        $model = new CourseModel();
 
         $data['min_semesters'] = $model::MIN_SEMESTERS;
         $data['min_position'] = $model::MIN_POSITION;
@@ -31,21 +65,20 @@ class Pages extends CI_Controller {
         $data['total_credits'] = $model::get_total_credits();
         $data['max_semesters'] = $model::get_max_semesters();
 
-        $data['content'] = $this->load->view('pages/index', $data, true);
+        $data['content'] = $this->load->view('home/original', $data, true);
         $this->load->view('templates/layout', $data);
-        
+
         return FALSE;
     }
-    
-    
+
     /**
      * 
      */
-    public function notable() {
+    public function grid()
+    {
 
-        $model = new Course_model();
-        
-        $data['title'] = 'DegreeMap';
+        $model = new CourseModel();
+
         $data['student_fname'] = 'Matt';
         $data['student_lname'] = 'Scaperoth';
 
@@ -55,51 +88,8 @@ class Pages extends CI_Controller {
         $data['total_credits'] = $model::get_total_credits();
         $data['max_semesters'] = $model::get_max_semesters();
 
-        $data['content'] = $this->load->view('pages/notable', $data, true);
+        $data['content'] = $this->load->view('home/grid', $data, true);
         $this->load->view('templates/full_layout', $data);
     }
-    
-    /**
-     * 
-     */
-    public function animation() {
-
-        $model = new Course_model();
-        
-        $data['title'] = 'DegreeMap';
-        $data['student_fname'] = 'Matt';
-        $data['student_lname'] = 'Scaperoth';
-
-        $data['min_semesters'] = $model::MIN_SEMESTERS;
-        $data['min_position'] = $model::MIN_POSITION;
-        $data['max_courses'] = $model::get_max_courses();
-        $data['total_credits'] = $model::get_total_credits();
-        $data['max_semesters'] = $model::get_max_semesters();
-
-        $data['content'] = $this->load->view('pages/animation', $data, true);
-        $this->load->view('templates/full_layout', $data);
-    }
-    
-    /**
-     * 
-     */
-    public function grid() {
-
-        $model = new Course_model();
-        
-        $data['title'] = 'DegreeMap';
-        $data['student_fname'] = 'Matt';
-        $data['student_lname'] = 'Scaperoth';
-
-        $data['min_semesters'] = $model::MIN_SEMESTERS;
-        $data['min_position'] = $model::MIN_POSITION;
-        $data['max_courses'] = $model::get_max_courses();
-        $data['total_credits'] = $model::get_total_credits();
-        $data['max_semesters'] = $model::get_max_semesters();
-
-        $data['content'] = $this->load->view('pages/grid', $data, true);
-        $this->load->view('templates/full_layout', $data);
-    }
-    
 
 }

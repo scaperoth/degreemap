@@ -56,6 +56,8 @@ $autoload['packages'] = array();
  */
 
 $autoload['libraries'] = array(
+    'database',
+    'session',
     'Fnd_HTML',
     'Fnd_Array',
 );
@@ -130,7 +132,7 @@ $autoload['language'] = array();
   |
  */
 
-$autoload['model'] = array();
+$autoload['model'] = array('CourseModel', 'UserModel');
 
 
 /* End of file autoload.php */

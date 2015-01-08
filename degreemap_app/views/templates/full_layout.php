@@ -1,9 +1,13 @@
+<?php
+$title = $this->config->item('site_title');
+?>
+
 <!DOCTYPE html>
 <html class="no-js" lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title><?php echo $student_fname . "'s " . $title; ?> | Welcome</title>
+        <title><?php echo $title; ?> | Welcome</title>
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/foundation.min.css" />
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/foundation-icons.css" />
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/gridster/stylesheets/gridster.css" />
@@ -11,24 +15,67 @@
         <script src="<?php echo base_url(); ?>assets/js/vendor/modernizr.js"></script>
     </head>
     <body>
+        <div class="page-wrap">
+            <nav class="top-bar" data-topbar role="navigation">
+                <ul class="title-area">
+                    <li class="name">
+                        <h1><a href="<?php echo site_url("../"); ?>"><?php echo $title; ?></a></h1>
+                    </li>
+                </ul>
 
-        <div class="row">
-            <div class="medium-12 columns">
-                <h1>Welcome to <?php echo $student_fname . "'s " . $title; ?></h1>
-                <h3 class="subheader">Updated up to SP 2015</h3>
+                <section class="top-bar-section">
+                    <?php if ($this->session->userdata('logged_in')): ?> 
+
+                        <?php 
+                        $page1 = $this->uri->segment(1); 
+                        $page2 = $this->uri->segment(2); 
+                        
+                        ?>
+                        <!-- Right Nav Section -->
+                        <ul class="left">
+                            <li class="<?php echo ($page1 == "home") ? "active" : ""; ?>"><a href="<?php echo site_url("../"); ?>">Home</a></li>
+
+                        </ul>
+
+                        <!-- Right Nav Section -->
+                        <ul class="right">
+                            <li class="has-dropdown <?php echo ($page1 == "user") ? "active" : ""; ?>">
+                                <a href="#"><i class="fi-widget user-menu"  ></i></a>
+                                <ul class="dropdown">
+                                    <li class="<?php echo ($page1 == "user") ? "active" : ""; ?>"><a href="<?php echo site_url("user"); ?>">My Account</a></li>
+                                    <li class="<?php echo ($page2 == "logout") ? "active" : ""; ?>"><a href="<?php echo site_url("user/logout"); ?>">Sign Out</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    <?php endif; ?>
+
+
+                </section>
+            </nav>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="medium-12 columns">
+                    <?php if (isset($header)): ?>
+                        <h1 class="text-center"><?php echo $header; ?></h1>
+                    <?php else: ?>
+                    <?php endif; ?>
+
+                </div>
+            </div>
+
+            <div class="row full ">
+                <div class="medium-12 columns">
+                    <?php echo $content; ?>
+                </div>
             </div>
         </div>
-
-        <div class="row full">
-            <div class="medium-12 columns">
-                <?php echo $content; ?>
-            </div>
-        </div>
-        <hr/>
         <footer>
+            <hr/>
             <h3 class="subheader text-center">
                 <small>
-                    Created By: <span><?php echo $student_fname . " " . $student_lname; ?></span>
+                    Created By: <span>Matt Scaperoth</span>
                 </small>
             </h3>
         </footer>

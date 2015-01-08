@@ -45,18 +45,18 @@
 </div>
 
 
-<div class="row">
-    <div class="medium-10 columns medium-centered ">
+<div class="row" id="courses_row">
+    <div class="medium-10 columns medium-centered " id="courses_table">
         <div class="row">
             <div class=" columns text-center" >
                 <h3>Total Credits<br /><?php echo $total_credits; ?></h3>
             </div>
         </div>
-        <div class="row ">
+        <div class="row " >
 
-            <?php for ($semester = Course_model::MIN_SEMESTERS; $semester <= $max_semesters; $semester++): ?>
+            <?php for ($semester = CourseModel::MIN_SEMESTERS; $semester <= $max_semesters; $semester++): ?>
                 <?php
-                $this_semester_courses = Course_model::get_courses($semester);
+                $this_semester_courses = CourseModel::get_courses($semester);
                 $semester_credits = 0;
                 $full_courses = TRUE;
                 ?>
@@ -66,9 +66,9 @@
                             <h2 align="center"><?php echo $semester; ?></h2>
                         </li>
                         <?php
-                        for ($position = Course_model::MIN_POSITION; $position <= $max_courses; $position++):
+                        for ($position = CourseModel::MIN_POSITION; $position <= $max_courses; $position++):
                             ?>
-                            <?php $course = Course_model::get_courses($semester, $position); ?>
+                            <?php $course = CourseModel::get_courses($semester, $position); ?>
                             <?php if ($course !== FALSE): ?>
                                 <li class="columns course" id="<?php echo $semester . $position; ?>" >
                                     <div class="ch-item ch-img-<?php echo $semester; ?>"  >				
@@ -103,7 +103,7 @@
                                                                 </span>
                                                             </h4>
                                                         </div>
-                                                            <i data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-color="<?php echo $course->labelcolor; ?>" class="fi-paint-bucket  status-nav" title="change status color"></i>
+                                                        <i data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-color="<?php echo $course->labelcolor; ?>" class="fi-paint-bucket  status-nav" title="change status color"></i>
                                                     </div>
                                                 </div>
                                                 <div class="ch-info-back">
@@ -158,43 +158,41 @@
                             <?php else: ?>
                                 <?php $full_courses = FALSE; ?>
                                 <li class="medium-1 columns middle" style="width:<?php echo (floor(80 / $max_courses) - .5); ?>%;">
-                                    <a href="#">
-                                        <i class="fi-plus large green"></i>
-                                    </a>
+                                    <i data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" class="fi-plus large green add-new"></i>
                                 </li>
                             <?php endif; ?>
                         <?php endfor; ?>
-                        <?php if ($full_courses): ?>
-                            <li class="medium-1 columns middle text-center" id="<?php echo $semester . $position . "smallplus" ?>" style="width:1%;">
+                        <?php if ($full_courses): ?><!--
+                    <li class="medium-1 columns middle text-center" id="<?php echo $semester . $position . "smallplus" ?>" style="width:1%;">
 
-                                <?php
-                                $gridlocation = $semester . $position;
-                                $attr = 'id="add_course_form' . $gridlocation . '" class="add-form"'; //The form will have the id 'my_form'
-                                echo form_open('forms/add', $attr);
-                                $data = array(
-                                    'name' => 'semester',
-                                    'class' => 'hidden-for-small-up',
-                                    'value' => $semester
-                                );
-                                echo form_input($data);
-                                $data = array(
-                                    'name' => 'position',
-                                    'class' => 'hidden-for-small-up',
-                                    'value' => $position
-                                );
-                                echo form_input($data);
-                                $data = array(
-                                    'type' => 'Submit',
-                                    'class' => 'icon-button padding-left15 padding-right15 gray',
-                                    'title' => 'Add a new course',
-                                    'content' => '<i class="fi-plus small green"></i>',
-                                    'value' => 'Delete'
-                                );
-                                echo form_button($data);
-                                echo form_close();
-                                ?>
+                            <?php
+                            $gridlocation = $semester . $position;
+                            $attr = 'id="add_course_form' . $gridlocation . '" class="add-form"'; //The form will have the id 'my_form'
+                            echo form_open('forms/add', $attr);
+                            $data = array(
+                                'name' => 'semester',
+                                'class' => 'hidden-for-small-up',
+                                'value' => $semester
+                            );
+                            echo form_input($data);
+                            $data = array(
+                                'name' => 'position',
+                                'class' => 'hidden-for-small-up',
+                                'value' => $position
+                            );
+                            echo form_input($data);
+                            $data = array(
+                                'type' => 'Submit',
+                                'class' => 'icon-button padding-left15 padding-right15 gray',
+                                'title' => 'Add a new course',
+                                'content' => '<i class="fi-plus small green"></i>',
+                                'value' => 'Delete'
+                            );
+                            echo form_button($data);
+                            echo form_close();
+                            ?>
 
-                            </li>
+                    </li>-->
                         <?php endif; ?>
                         <li class="medium-1 columns middle text-center">
 

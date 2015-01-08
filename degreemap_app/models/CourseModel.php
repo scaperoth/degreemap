@@ -1,6 +1,6 @@
 <?php
 
-class Course_model extends CI_Model
+class CourseModel extends CI_Model
 {
 
     //grid constants. they are initialized at 1
@@ -8,12 +8,15 @@ class Course_model extends CI_Model
     const MIN_POSITION = 1;
     //default constants in case there is no table data
     const MAX_COURSES_DEFAULT = 5;
-    const MAX_SEMESTERS_DEFAULT = 7;
+    const MAX_SEMESTERS_DEFAULT = 8;
+    
+    const TABLE_NAME = "courses";
 
     public function __construct()
     {
-
+        
         $this->load->database();
+        
     }
 
     /**
@@ -29,7 +32,7 @@ class Course_model extends CI_Model
     {
         if ($semester === FALSE)
         {
-            $query = $this->db->get('courses');
+            $query = $this->db->get(self::TABLE_NAME);
             return $query->result_array();
         }
 
@@ -70,10 +73,10 @@ class Course_model extends CI_Model
 
         $result = $this->db->query($query);
 
-        if ($result === FALSE || $result->first_row()->max_count === NULL)
+        //if ($result === FALSE || $result->first_row()->max_count === NULL)
             return self::MAX_COURSES_DEFAULT;
-        else
-            return $result->first_row()->max_count;
+        //else
+        //    return $result->first_row()->max_count;
     }
 
     /**
@@ -86,10 +89,10 @@ class Course_model extends CI_Model
 
         $result = $this->db->query($query);
 
-        if ($result === FALSE || $result->first_row()->max_semester === NULL)
+        //if ($result === FALSE || $result->first_row()->max_semester === NULL)
             return self::MAX_SEMESTERS_DEFAULT;
-        else
-            return $result->first_row()->max_semester;
+        //else
+        //    return $result->first_row()->max_semester;
     }
 
     /**
@@ -112,10 +115,12 @@ class Course_model extends CI_Model
      * @param array $field_value array of field=>value
      * @return boolean of success
      */
-    public function delete($table_name, $field_value = array('' => ''))
+    public function delete( $field_value = array('' => ''), $table_name = self::TABLE_NAME)
     {
-        $query = $this->db->delete($table_name, $field_value);
-
+        $this->db->where('semester', $field_value['semester']);
+        $this->db->where('position', $field_value['position']);
+        $query = $this->db->delete($table_name);
+        
         if ($query)
             $result = TRUE;
         else
@@ -124,15 +129,49 @@ class Course_model extends CI_Model
         return $result;
     }
 
-    public function update($table_name, $field_value = array('' => ''))
+    /**
+     * 
+     * @param type $table_name
+     * @param type $field_value
+     */
+    public function update( $field_value = array('' => ''), $table_name = self::TABLE_NAME)
     {
         $data = array(
             $field_value['field'] => $field_value['value'],
         );
-        
+
         $this->db->where('semester', $field_value['semester']);
         $this->db->where('position', $field_value['position']);
-        $this->db->update($table_name, $data);
+        $query = $this->db->update($table_name, $data);
+        
+        if ($query)
+            $result = TRUE;
+        else
+            $result = FALSE;
+
+        return $result;
+    }
+
+    /**
+     * 
+     * @param type $table_name
+     * @param type $field_value
+     */
+    public function add( $field_value = array('' => ''), $table_name = self::TABLE_NAME)
+    {
+        $data = array(
+            'semester' => $field_value['semester'],
+            'position' => $field_value['position'],
+        );
+        
+        $query = $this->db->insert($table_name, $data);
+        
+        if ($query)
+            $result = TRUE;
+        else
+            $result = FALSE;
+
+        return $result;
     }
 
     /**
