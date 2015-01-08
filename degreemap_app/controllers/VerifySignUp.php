@@ -17,25 +17,42 @@ class VerifySignUp extends CI_Controller
      */
     function index()
     {
-        //This method will have the credentials validation
+//This method will have the credentials validation
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|callback_check_database');
+        $this->form_validation->set_rules('username', 'Username', 'trim|required|xss_clean|callback_check_username');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
         $this->form_validation->set_rules('fname', 'First Name', 'trim|required|xss_clean');
         $this->form_validation->set_rules('lname', 'Last Name', 'trim|required|xss_clean');
 
         if ($this->form_validation->run() == FALSE)
         {
-            //use flash helper to set flash message values
-            set_flash(validation_errors(), "alert");
+
+//Field validation failed.  User redirected to login page
             
-            //Field validation failed.  User redirected to login page
-            redirect('user/signup');
+            $data['content'] = $this->load->view('user/signup', NULL, true);
+            $this->load->view('templates/full_layout', $data);
         } else
         {
-            //Go to private area
+            $this->create_new_user();
+//Go to private area
             redirect('home', 'refresh');
+        }
+    }
+
+    function check_username()
+    {
+        $username = trim($this->input->post('username'));
+//query the database
+        $result = $this->UserModel->is_unique($username);
+
+        if (!$result)
+        {
+            $this->form_validation->set_message('check_username', "Username '$username' is taken");
+            return FALSE;
+        } else
+        {
+            return TRUE;
         }
     }
 
@@ -43,45 +60,28 @@ class VerifySignUp extends CI_Controller
      * 
      * @return boolean
      */
-    function check_database()
+    function create_new_user()
     {
-        //Field validation succeeded.  Validate against database
+        $insert_data['username'] = trim($this->input->post('username'));
+        $insert_data['password'] = trim($this->input->post('password'));
+        $insert_data['fname'] = trim($this->input->post('fname'));
+        $insert_data['lname'] = trim($this->input->post('lname'));
 
-
-
-
-        $username = trim($this->input->post('username'));
-
-        //query the database
-        $result = $this->UserModel->is_unique($username);
-
-        if (!$result)
+//insert the new values and then authenticate
+        if ($this->UserModel->insert($insert_data))
         {
-            $this->form_validation->set_message('check_database', "Username '$username' is taken");
-            return FALSE;
-        } else
-        {
-            $insert_data['username'] = trim($this->input->post('username'));
-            $insert_data['password'] = trim($this->input->post('password'));
-            $insert_data['fname'] = trim($this->input->post('fname'));
-            $insert_data['lname'] = trim($this->input->post('lname'));
-
-            //insert the new values and then authenticate
-            if ($this->UserModel->insert($insert_data))
+//use the auth_helper function
+            if (sign_in($insert_data['username'], $insert_data['password']))
             {
-                //use the auth_helper function
-                if (sign_in($insert_data['username'], $insert_data['password']))
-                {
-                    return TRUE;
-                } else
-                {
-                    return FALSE;
-                }
+                return TRUE;
             } else
             {
-                $this->form_validation->set_message('check_database', "Insert Failed");
                 return FALSE;
             }
+        } else
+        {
+            $this->form_validation->set_message('check_database', "Insert Failed");
+            return FALSE;
         }
     }
 

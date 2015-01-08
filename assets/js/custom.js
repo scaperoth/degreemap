@@ -52,13 +52,19 @@ function bind_page() {
     /*=========
      * EDIT
      ==========*/
+    var old_value;
+    $('.edit-box').focusin(function (e) {
+
+        old_value = $.trim($(this).text());
+    })
     $('.edit-box').focusout(function (e) {
         var pos = $(this).attr('data-position');
         var sem = $(this).attr('data-semester');
         var field = $(this).attr('data-field');
         var value = $.trim($(this).text());
         var ajax_data = {position: pos, semester: sem, field: field, value: value};
-        ajax("course/update", ajax_data)
+        if (value !== old_value)
+            ajax("course/update", ajax_data)
     });
 
     $('.course_section .status-nav').click(function (e) {
@@ -108,10 +114,12 @@ function bind_page() {
         });
     });
 
-    //fade out flash display on page load
-    $(".flash").fadeOut(6000, function () {
-
-    });
+    /*
+     //fade out flash display on page load
+     $(".flash").animate({
+     opacity:0,
+     }, 6000);
+     */
 }
 
 
@@ -136,8 +144,19 @@ function ajax(url, data) {
              console.log("\n value: " + data.value);
              */
             //ajaxresult = true;
-            $("#main").load("./ #inner", function () {
+            $("body").load("./ .page-wrap", function () {
+
+                $(document).foundation('reflow');
+
                 bind_page()
+
+                if ($(window).scrollTop() >= 45) {
+
+                    $(".sticky").each(function () {
+                        $(this).addClass("fixed");
+                    });
+
+                }
             });
         },
         error: function (data) {

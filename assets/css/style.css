@@ -301,10 +301,54 @@ h3 small a{
     color:#bfbfbf;
 }
 
+/*ERROR MESSAGES*/
+small.error{
+    padding:2px 5px;
+}
+.error p{
+    font-size:.9rem;
+    margin:0;
+}
+
 /*FLASH MESSAGES*/
 .flash_container{
     min-height: 40px;
-    line-height:1.5;
+    height:40px;
+    opacity:0;
+    -webkit-animation: fadeout 8s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadeout 8s; /* Firefox < 16 */
+        -ms-animation: fadeout 8s; /* Internet Explorer */
+         -o-animation: fadeout 8s; /* Opera < 12.1 */
+            animation: fadeout 8s;
+}
+
+@keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadeout {
+    from { opacity: 1; }
+    to   { opacity: 0; }
 }
 
 .flash_container.sticky.fixed{

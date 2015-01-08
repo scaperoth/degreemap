@@ -14,7 +14,7 @@ if (!function_exists('get_flash'))
         $CI = & get_instance();
         if ($CI->session->userdata('flash'))
         {
-            $flash['message'] = strip_tags($CI->session->userdata('flash'));
+            $flash['message'] = $CI->session->userdata('flash');
             $flash['class'] = $CI->session->userdata('flash_type') . " flash";
             $CI->session->unset_userdata('flash');
             $CI->session->unset_userdata('flash_type');

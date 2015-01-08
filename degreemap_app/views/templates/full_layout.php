@@ -15,7 +15,7 @@
     </head>
     <body>
         <div class="page-wrap">
-            <div class="sticky fixed">
+            <div class="sticky ">
                 <nav class="top-bar" data-topbar role="navigation" >
                     <ul class="title-area">
                         <li class="name">
@@ -53,7 +53,7 @@
                                 <li class="<?php echo ($page2 == "signup") ? "active" : ""; ?>"><a href="<?php echo site_url("user/signup"); ?>">Sign Up</a></li>
 
                             </ul>
-                        <?php endif; ?>
+                        <?php endif; ?> 
 
 
                     </section>

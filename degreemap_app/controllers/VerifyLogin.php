@@ -28,11 +28,8 @@ class VerifyLogin extends CI_Controller
 
         if ($this->form_validation->run() == FALSE)
         {
-            //use flash helper to set flash message values
-            set_flash(validation_errors(), "alert");
-            
-            //Field validation failed.  User redirected to login page
-            redirect('user/login');
+            $data['content'] = $this->load->view('user/login', NULL, true);
+            $this->load->view('templates/full_layout', $data);
         } else
         {
             //Go to private area
