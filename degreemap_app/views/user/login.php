@@ -2,16 +2,9 @@
     <div class="login-box">
         <div class="row">
             <div class="large-12 columns">
-                <?php
-                $error = '';
-                if (isset($flash))
-                {
-                    $error = "<small class=\"error\">$flash</small>";
-                }
-                ?>
+                
                 <?php echo form_open('verifylogin'); ?>
                 <div class="row">
-                    <?php echo $error; ?>
                     <div class="large-12 columns">
                         <input type="text" name="username" placeholder="Username" />
                     </div>

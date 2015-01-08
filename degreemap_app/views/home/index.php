@@ -56,7 +56,7 @@
 
             <?php for ($semester = CourseModel::MIN_SEMESTERS; $semester <= $max_semesters; $semester++): ?>
                 <?php
-                $this_semester_courses = CourseModel::get_courses($semester);
+                $this_semester_courses = $this->CourseModel->get_courses($semester);
                 $semester_credits = 0;
                 $full_courses = TRUE;
                 ?>
@@ -68,7 +68,7 @@
                         <?php
                         for ($position = CourseModel::MIN_POSITION; $position <= $max_courses; $position++):
                             ?>
-                            <?php $course = CourseModel::get_courses($semester, $position); ?>
+                            <?php $course = $this->CourseModel->get_courses($semester, $position); ?>
                             <?php if ($course !== FALSE): ?>
                                 <li class="columns course" id="<?php echo $semester . $position; ?>" >
                                     <div class="ch-item ch-img-<?php echo $semester; ?>"  >				
@@ -83,9 +83,7 @@
                                                         <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="title" contenteditable="true">
                                                             <?php echo $course->title; ?>
                                                         </span>
-                                                        (<span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="credits" contenteditable="true">
-                                                            <?php echo $course->credits; ?>
-                                                        </span>)
+                                                        (<span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="credits" contenteditable="true"><?php echo $course->credits; ?></span>)
                                                     </h5>
                                                     <div class="clearfix"></div>
                                                     <h5 class="subheader cell_body course_section">
@@ -112,18 +110,6 @@
                                                     <?php
                                                     $attr = 'id="delete_course_form' . $semester . $position . '" class="delete-form"'; //The form will have the id 'my_form'
                                                     echo form_open('forms/delete', $attr);
-                                                    $data = array(
-                                                        'name' => 'field',
-                                                        'class' => 'hidden-for-small-up',
-                                                        'value' => 'title'
-                                                    );
-                                                    echo form_input($data);
-                                                    $data = array(
-                                                        'name' => 'value',
-                                                        'class' => 'hidden-for-small-up',
-                                                        'value' => $course->title,
-                                                    );
-                                                    echo form_input($data);
                                                     $data = array(
                                                         'name' => 'semester',
                                                         'class' => 'hidden-for-small-up',

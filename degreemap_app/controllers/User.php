@@ -28,12 +28,6 @@ class User extends MY_Controller
     {
         if (!$this->session->userdata('logged_in'))
         {
-            if ($this->session->userdata('flash'))
-            {
-                $flash = $this->session->userdata('flash');
-                $data['flash'] = $flash;
-                $this->session->unset_userdata('flash');
-            }
             $this->load->helper(array('form'));
             $data['header'] = "</br>Login";
             $data['content'] = $this->load->view('user/login', $data, true);
@@ -44,10 +38,33 @@ class User extends MY_Controller
         }
     }
 
+    /**
+     * 
+     */
+    function signup()
+    {
+        if (!$this->session->userdata('logged_in'))
+        {
+            if ($this->session->userdata('flash'))
+            {
+                $flash = $this->session->userdata('flash');
+                $data['flash'] = $flash;
+                $this->session->unset_userdata('flash');
+            }
+            $this->load->helper(array('form'));
+            $data['header'] = "</br>Sign Up";
+            $data['content'] = $this->load->view('user/signup', $data, true);
+            $this->load->view('templates/full_layout', $data);
+        } else
+        {
+            redirect('home');
+        }
+    }
+
     function logout()
     {
-        $this->session->unset_userdata('logged_in');
-        session_destroy();
+        //use auth helper to sign out.
+        sign_out();
         redirect('user/login', 'refresh');
     }
 

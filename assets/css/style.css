@@ -301,11 +301,35 @@ h3 small a{
     color:#bfbfbf;
 }
 
-/*ERRORS*/
-.error p{
+/*FLASH MESSAGES*/
+.flash_container{
+    min-height: 40px;
+    line-height:1.5;
+}
+
+.flash_container.sticky.fixed{
+    top:45px;
+}
+
+.flash{
+    text-align:center;
+}
+
+small.flash{
+    min-height:40px;
+    display: block;
+    width:100%;
+    background:none;
+    font-style:normal;
+    margin:0;
+    padding: 0.375rem 0.5625rem 0.5625rem;
+    font-size: 0.75rem;
+    font-weight: normal;
+}
+
+.flash p{
     margin:0;
     padding:0;
-    text-align:center;
 }
 
 /*************

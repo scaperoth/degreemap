@@ -39,14 +39,13 @@ function bind_page() {
     $('.delete-form').submit(function (e) {
         e.preventDefault(); //Avoid that the event 'submit' continues with its normal execution, so that, we avoid to reload the whole page
         var ajax_data = $(this).serialize();
-        ajax("forms/delete", ajax_data).done(function (data) {
+        ajax("course/delete", ajax_data).done(function (data) {
             data = JSON.parse(data);
             //console.log('Success: ' + data);
             //console.log("\n add Big: " + data.semester);
             add_plus(data.semester, data.position);
             //console.log("\nremove little: ")
             remove_little_plus(data.semester, data.position);
-            bind_page()
         });
     });
 
@@ -59,7 +58,7 @@ function bind_page() {
         var field = $(this).attr('data-field');
         var value = $.trim($(this).text());
         var ajax_data = {position: pos, semester: sem, field: field, value: value};
-        ajax("forms/edit", ajax_data)
+        ajax("course/update", ajax_data)
     });
 
     $('.course_section .status-nav').click(function (e) {
@@ -84,7 +83,7 @@ function bind_page() {
 
         var ajax_data = {position: pos, semester: sem, field: field, value: newcolor};
 
-        ajax("forms/edit", ajax_data).done(function (data) {
+        ajax("course/update", ajax_data).done(function (data) {
             console.log("res: " + color);
             data = JSON.parse(data);
 
@@ -104,12 +103,17 @@ function bind_page() {
         var pos = $(this).attr('data-position');
         var sem = $(this).attr('data-semester');
         var ajax_data = {position: pos, semester: sem};
-        ajax("forms/add", ajax_data).done(function (data) {
+        ajax("course/insert", ajax_data).done(function (data) {
 
         });
     });
 
+    //fade out flash display on page load
+    $(".flash").fadeOut(6000, function () {
+
+    });
 }
+
 
 /**
  * 
@@ -132,7 +136,7 @@ function ajax(url, data) {
              console.log("\n value: " + data.value);
              */
             //ajaxresult = true;
-            $("#courses_row").load("./ #courses_table", function () {
+            $("#main").load("./ #inner", function () {
                 bind_page()
             });
         },

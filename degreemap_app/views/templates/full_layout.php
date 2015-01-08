@@ -1,9 +1,8 @@
-<?php
-$title = $this->config->item('site_title');
-?>
-
 <!DOCTYPE html>
 <html class="no-js" lang="en">
+    <?php
+    $title = $this->config->item('site_title');
+    ?>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -16,61 +15,77 @@ $title = $this->config->item('site_title');
     </head>
     <body>
         <div class="page-wrap">
-            <nav class="top-bar" data-topbar role="navigation">
-                <ul class="title-area">
-                    <li class="name">
-                        <h1><a href="<?php echo site_url("../"); ?>"><?php echo $title; ?></a></h1>
-                    </li>
-                </ul>
+            <div class="sticky fixed">
+                <nav class="top-bar" data-topbar role="navigation" >
+                    <ul class="title-area">
+                        <li class="name">
+                            <h1><a href="<?php echo site_url("../"); ?>"><?php echo $title; ?></a></h1>
+                        </li>
+                    </ul>
 
-                <section class="top-bar-section">
-                    <?php if ($this->session->userdata('logged_in')): ?> 
-
-                        <?php 
-                        $page1 = $this->uri->segment(1); 
-                        $page2 = $this->uri->segment(2); 
-                        
+                    <section class="top-bar-section">
+                        <?php
+                        $page1 = $this->uri->segment(1);
+                        $page2 = $this->uri->segment(2);
                         ?>
-                        <!-- Right Nav Section -->
-                        <ul class="left">
-                            <li class="<?php echo ($page1 == "home") ? "active" : ""; ?>"><a href="<?php echo site_url("../"); ?>">Home</a></li>
+                        <?php if ($this->session->userdata('logged_in')): ?> 
 
-                        </ul>
+                            <!-- Right Nav Section -->
+                            <ul class="left">
+                                <li class="<?php echo ($page1 == "home") ? "active" : ""; ?>"><a href="<?php echo site_url("../"); ?>">Home</a></li>
 
-                        <!-- Right Nav Section -->
-                        <ul class="right">
-                            <li class="has-dropdown <?php echo ($page1 == "user") ? "active" : ""; ?>">
-                                <a href="#"><i class="fi-widget user-menu"  ></i></a>
-                                <ul class="dropdown">
-                                    <li class="<?php echo ($page1 == "user") ? "active" : ""; ?>"><a href="<?php echo site_url("user"); ?>">My Account</a></li>
-                                    <li class="<?php echo ($page2 == "logout") ? "active" : ""; ?>"><a href="<?php echo site_url("user/logout"); ?>">Sign Out</a></li>
-                                </ul>
-                            </li>
+                            </ul>
 
-                        </ul>
-                    <?php endif; ?>
+                            <!-- Right Nav Section -->
+                            <ul class="right">
+                                <li class="has-dropdown <?php echo ($page1 == "user") ? "active" : ""; ?>">
+                                    <a href="#"><?php echo $this->session->userdata('username'); ?> <i class="fi-widget"  ></i></a>
+                                    <ul class="dropdown">
+                                        <li class="<?php echo ($page1 == "user") ? "active" : ""; ?>"><a href="<?php echo site_url("user"); ?>">My Account</a></li>
+                                        <li class="<?php echo ($page2 == "logout") ? "active" : ""; ?>"><a href="<?php echo site_url("user/logout"); ?>">Sign Out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        <?php else: ?>
+                            <!-- Right Nav Section -->
+                            <ul class="right">
+                                <li class="<?php echo ($page2 == "login") ? "active" : ""; ?>"><a href="<?php echo site_url("user/login"); ?>">Log In</a></li>
+                                <li class="<?php echo ($page2 == "signup") ? "active" : ""; ?>"><a href="<?php echo site_url("user/signup"); ?>">Sign Up</a></li>
+
+                            </ul>
+                        <?php endif; ?>
 
 
-                </section>
-            </nav>
-            <br/>
-            <br/>
-            <div class="row">
-                <div class="medium-12 columns">
-                    <?php if (isset($header)): ?>
-                        <h1 class="text-center"><?php echo $header; ?></h1>
-                    <?php else: ?>
-                    <?php endif; ?>
+                    </section>
+                </nav>
+            </div><!--end sticky nav-->
+            <div id="main">
+                <div id="inner">
+                    <div class="flash_container sticky">
+                        <?php
+                        get_flash();
+                        ?>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="medium-12 columns">
 
-                </div>
-            </div>
+                            <?php if (isset($header)): ?>
+                                <h1 class="text-center"><?php echo $header; ?></h1>
+                            <?php else: ?>
+                            <?php endif; ?>
 
-            <div class="row full ">
-                <div class="medium-12 columns">
-                    <?php echo $content; ?>
-                </div>
-            </div>
-        </div>
+                        </div>
+                    </div>
+
+                    <div class="row full ">
+                        <div class="medium-12 columns">
+                            <?php echo $content; ?>
+                        </div>
+                    </div>
+                </div><!--end inner-->
+            </div><!--end main-->
+        </div><!--end page-wrap-->
         <footer>
             <hr/>
             <h3 class="subheader text-center">

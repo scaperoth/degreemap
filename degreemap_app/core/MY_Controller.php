@@ -8,13 +8,15 @@ class MY_Controller extends CI_Controller
 
     protected $before_filter = array(
         'action' => 'redirect_if_not_logged_in',
-        'except' => array('login'),
+        'except' => array('login', 'signup'),
     );
     protected $after_filter = array();
     
     public function __construct()
     {
         parent::__construct();
+        //This method will have the credentials validation
+        $this->load->library('form_validation');
         session_start();
     }
        
@@ -118,6 +120,7 @@ class MY_Controller extends CI_Controller
     {
         if (!$this->session->userdata('logged_in'))
         {
+            $this->session->set_userdata('flash', "<p>Access Denied</p>");
             redirect('user/login', 'refresh');
         }
     }

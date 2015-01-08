@@ -12,16 +12,14 @@ class Home extends MY_Controller
     public function index()
     {
         $session_data = $this->session->userdata('logged_in');
-
+        
         $data['username'] = $session_data['username'];
 
-        $model = new CourseModel();
-
-        $data['min_semesters'] = $model::MIN_SEMESTERS;
-        $data['min_position'] = $model::MIN_POSITION;
-        $data['max_courses'] = $model::get_max_courses();
-        $data['total_credits'] = $model::get_total_credits();
-        $data['max_semesters'] = $model::get_max_semesters();
+        $data['min_semesters'] = CourseModel::MIN_SEMESTERS;
+        $data['min_position'] = CourseModel::MIN_POSITION;
+        $data['max_courses'] = $this->CourseModel->get_max_courses();
+        $data['total_credits'] = $this->CourseModel->get_total_credits();
+        $data['max_semesters'] = $this->CourseModel->get_max_semesters();
 
         $data['content'] = $this->load->view('home/index', $data, true);
         $this->load->view('templates/full_layout', $data);
