@@ -50,7 +50,8 @@ class Course extends MY_Controller
         {
             $return_array = $_POST;
             $return = $this->_submit($return_array, self::UPDATE);
-
+            //use flash helper to set flash message values
+            set_flash("Course Updated", "success");
 
             echo $return;
         } else
