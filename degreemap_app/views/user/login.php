@@ -7,6 +7,13 @@
                 <?php echo form_open('verifylogin'); ?>
                 <div class="row">
                     <div class="large-12 columns">
+                        <?php if (form_error('error') && (!form_error('username') || !form_error('username'))): ?>
+                            <small class="error"><?php echo form_error('error'); ?></small>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-12 columns">
                         <?php if (form_error('username')): ?>
                             <label class="error">
                                 <input class="error" type="text" name="username" value="<?php echo set_value('username'); ?>" placeholder="Username" />
@@ -29,6 +36,7 @@
                         <?php endif; ?>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="large-12 large-centered columns">
                         <input type="submit" class="button expand" value="Log In"/>

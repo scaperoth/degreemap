@@ -25,8 +25,8 @@
 
                     <section class="top-bar-section">
                         <?php
-                        $page1 = $this->uri->segment(1);
-                        $page2 = $this->uri->segment(2);
+                        $page1 = strtolower($this->uri->segment(1));
+                        $page2 = strtolower($this->uri->segment(2));
                         ?>
                         <?php if ($this->session->userdata('logged_in')): ?> 
 
@@ -69,7 +69,7 @@
                     <br/>
                     <div class="row">
                         <div class="medium-12 columns">
-
+                            <?php echo ($page2 == "login" || $page2 == "signup" || $page1 == "verifylogin" || $page1 == "verifysignup") ? "<br/><br/>" : ""; ?>
                             <?php if (isset($header)): ?>
                                 <h1 class="text-center"><?php echo $header; ?></h1>
                             <?php else: ?>
