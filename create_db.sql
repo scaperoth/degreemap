@@ -4,21 +4,31 @@
 
 #GRANT ALL ON degreemap.* TO 'degreemapuser'@'localhost';
 
-CREATE TABLE IF NOT EXISTS `degreemap`.`courses` (
-  `semester` INT(1) NOT NULL,
-  `position` INT(1) NOT NULL,
-  `title` VARCHAR(45) ,
-  `credits` INT(1) ,
-  `description` TEXT NULL,
-  `link` TEXT NULL,
-  `labelcolor` VARCHAR(20) ,
-  `labelmessage` VARCHAR(45) ,
-  PRIMARY KEY (`position`, `semester`))
-ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS `degreemap`.`student` (
-  `student_id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `degreemap`.`users` (
+  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(90) NOT NULL,
+  `password` TEXT NOT NULL,
   `fname` VARCHAR(45) NOT NULL,
   `lname` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`student_id`))
-ENGINE = InnoDB;
+  `is_advisor` INT(11) NOT NULL DEFAULT '0',
+  `is_admin` INT(11) NOT NULL DEFAULT '0',
+  `advisor_id` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`user_id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 12
+DEFAULT CHARACTER SET = utf8
+
+CREATE TABLE IF NOT EXISTS `degreemap`.`courses` (
+  `semester` INT(1) NOT NULL DEFAULT '1',
+  `position` INT(1) NOT NULL,
+  `username` VARCHAR(60) NOT NULL DEFAULT 'default',
+  `title` VARCHAR(45) NULL DEFAULT 'Default',
+  `credits` INT(1) NULL DEFAULT '3',
+  `description` TEXT NULL DEFAULT NULL,
+  `link` VARCHAR(200) NULL DEFAULT '#',
+  `labelcolor` VARCHAR(20) NULL DEFAULT 'alert',
+  `labelmessage` VARCHAR(45) NULL DEFAULT 'status',
+  PRIMARY KEY (`semester`, `position`, `username`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
