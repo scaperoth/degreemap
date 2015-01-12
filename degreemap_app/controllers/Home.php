@@ -14,7 +14,6 @@ class Home extends MY_Controller
         $session_data = $this->session->userdata('logged_in');
         
         $data['username'] = $session_data['username'];
-
         $data['min_semesters'] = CourseModel::MIN_SEMESTERS;
         $data['min_position'] = CourseModel::MIN_POSITION;
         $data['max_courses'] = $this->CourseModel->get_max_courses();

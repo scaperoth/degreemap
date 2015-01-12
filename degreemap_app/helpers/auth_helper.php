@@ -24,7 +24,6 @@ if (!function_exists('sign_in'))
             foreach ($result as $row)
             {
                 $CI->session->set_userdata('logged_in', TRUE);
-                $CI->session->set_userdata('id', $row->user_id);
                 $CI->session->set_userdata('username', $row->username);
             }
             return TRUE;

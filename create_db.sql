@@ -6,7 +6,6 @@
 
 
 CREATE TABLE IF NOT EXISTS `degreemap`.`users` (
-  `user_id` INT(11) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(90) NOT NULL,
   `password` TEXT NOT NULL,
   `fname` VARCHAR(45) NOT NULL,
@@ -14,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `degreemap`.`users` (
   `is_advisor` INT(11) NOT NULL DEFAULT '0',
   `is_admin` INT(11) NOT NULL DEFAULT '0',
   `advisor_id` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`user_id`))
+  PRIMARY KEY (`username`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 12
 DEFAULT CHARACTER SET = utf8
@@ -32,3 +31,12 @@ CREATE TABLE IF NOT EXISTS `degreemap`.`courses` (
   PRIMARY KEY (`semester`, `position`, `username`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
+
+ALTER TABLE `degreemap`.`courses` 
+ADD INDEX `fk_username_idx` (`username` ASC);
+ALTER TABLE `degreemap`.`courses` 
+ADD CONSTRAINT `fk_username`
+  FOREIGN KEY (`username`)
+  REFERENCES `degreemap`.`users` (`username`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
