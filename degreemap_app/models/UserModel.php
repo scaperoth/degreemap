@@ -55,7 +55,7 @@ class UserModel extends CI_Model {
      * @return boolean
      */
     function authenticate($username, $password) {
-        $this->db->select('username, password');
+        $this->db->select('username, password, fname, lname');
         $this->db->from('users');
         $this->db->where('username', $username);
         $this->db->limit(1);

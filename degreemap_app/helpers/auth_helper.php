@@ -25,6 +25,9 @@ if (!function_exists('sign_in'))
             {
                 $CI->session->set_userdata('logged_in', TRUE);
                 $CI->session->set_userdata('username', $row->username);
+                $CI->session->set_userdata('fname', $row->fname);
+                $CI->session->set_userdata('lname', $row->lname);
+                $CI->session->set_userdata('full_name', $row->fname.' '.$row->lname);
             }
             return TRUE;
         } else

@@ -38,7 +38,7 @@
 
                             <!-- Right Nav Section -->
                             <ul class="right">
-                                <li class="has-dropdown <?php echo ($page1 == "user") ? "active" : ""; ?>">
+                                <li class="has-dropdown ">
                                     <a href="#"><?php echo $this->session->userdata('username'); ?> <i class="fi-widget"  ></i></a>
                                     <ul class="dropdown">
                                         <li class="<?php echo ($page1 == "user") ? "active" : ""; ?>"><a href="<?php echo site_url("user"); ?>">My Account</a></li>
@@ -80,7 +80,13 @@
 
                     <div class="row full ">
                         <div class="medium-12 columns">
-                            <?php echo $content; ?>
+
+                            <div class="row">
+
+                                <div class="medium-10 columns medium-centered">
+                                    <?php echo $content; ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div><!--end inner-->

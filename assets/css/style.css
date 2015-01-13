@@ -15,18 +15,17 @@ html, body {
 
 /*************
 HEADER
-***********
-.icon-bar.three-up{
-    margin:0 auto;
-}
-.icon-bar.three-up .item{
-    margin-right:12px;
-    width:30%;
-}**/
+*************/
 
 /*************
 FOOTER
 *************/
+
+.icon-bar.three-up{
+    margin:50px auto;
+}
+.icon-bar.three-up p{
+}
 
 .page-wrap:after {
     height: 100px; 
@@ -54,8 +53,6 @@ LAYOUTS
 
 .course{
     padding:20px;
-    margin:5px;
-    text-align:center;
     position: relative;
 }
 
@@ -70,7 +67,7 @@ LAYOUTS
     z-index: -1;   
 }
 
-.columns.middle{
+li.middle{
     padding-top:100px;
 }
 
@@ -271,10 +268,6 @@ TYPOGRAPHY
 }
 
 /*LABELS*/
-.cell_footer .label{
-    min-height:42px;
-    min-width:1px;
-}
 .label h4{
     font-size:1.5em;
     color:#fefefe;
@@ -316,10 +309,10 @@ small.error{
     height:40px;
     opacity:0;
     -webkit-animation: fadeout 8s; /* Safari, Chrome and Opera > 12.1 */
-       -moz-animation: fadeout 8s; /* Firefox < 16 */
-        -ms-animation: fadeout 8s; /* Internet Explorer */
-         -o-animation: fadeout 8s; /* Opera < 12.1 */
-            animation: fadeout 8s;
+    -moz-animation: fadeout 8s; /* Firefox < 16 */
+    -ms-animation: fadeout 8s; /* Internet Explorer */
+    -o-animation: fadeout 8s; /* Opera < 12.1 */
+    animation: fadeout 8s;
 }
 
 @keyframes fadeout {
@@ -396,16 +389,43 @@ table thead tr th, table tbody tr td{
 
 /*CUSTOM TABLE CELLS*/
 .cell_head{
-    height:30px;
+    margin:0 auto;
+    position:relative;
+    top:10px;
 }
 .cell_body{
-    height:100px;
-}
-.cell_body:hover{
-}
+    height:130px;
+    font-size: 1.4rem;
+    line-height:1;
+    width:85%;
+    margin:0 auto;
+    position:relative;
+    top:10px;
+    text-overflow: ellipsis;
+}    
+
 
 .cell_footer{
+    position:absolute;
+    width:100%;
+    bottom:-20px;
+}
+.cell_footer .footer_wrapper{
+    position:relative;
+    width:90%;
     margin:0 auto;
+}
+.cell_footer .label{
+    white-space:normal;
+    text-align:center;
+}
+.cell_footer .footer_wrapper .label h4{
+    
+    text-overflow: ellipsis;
+    font-size:.9rem;
+}
+
+.cell_footer .footer_wrapper .label span{
 }
 
 .course .course_section{
@@ -427,7 +447,6 @@ table thead tr th, table tbody tr td{
 }
 
 .status-nav{
-    color:#999;
     height:40px;
 }
 
