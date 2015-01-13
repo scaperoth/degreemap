@@ -79,14 +79,9 @@
                     </div>
 
                     <div class="row full ">
-                        <div class="medium-12 columns">
+                        <div class="medium-12 columns medium-centered">
 
-                            <div class="row">
-
-                                <div class="medium-10 columns medium-centered">
                                     <?php echo $content; ?>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div><!--end inner-->

@@ -392,15 +392,21 @@ table thead tr th, table tbody tr td{
     margin:0 auto;
     position:relative;
     top:10px;
+    width:95%;
 }
 .cell_body{
-    height:130px;
+    display: block; /* Fallback for non-webkit */
+    display: -webkit-box;
+    height:45%;
     font-size: 1.4rem;
-    line-height:1;
     width:85%;
     margin:0 auto;
     position:relative;
     top:10px;
+    line-height: 1.2;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     text-overflow: ellipsis;
 }    
 
@@ -420,7 +426,7 @@ table thead tr th, table tbody tr td{
     text-align:center;
 }
 .cell_footer .footer_wrapper .label h4{
-    
+
     text-overflow: ellipsis;
     font-size:.9rem;
 }

@@ -40,39 +40,6 @@
                             <div class="ch-item ch-img-<?php echo $semester; ?>"  >				
                                 <div class="ch-info-wrap">
                                     <div class="ch-info">
-                                        <div class="ch-info-front ch-img-<?php echo $semester; ?>"  >
-                                            <i class="fi-widget right settings-icon "  ></i>
-                                            <h5 class="cell_head course_section">
-                                                <a target="blank" href="<?php echo $course->link; ?>">
-                                                    <i class="fi-link  " ></i>
-                                                </a>
-                                                <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="title" contenteditable="true">
-                                                    <?php echo $course->title; ?>
-                                                </span>
-                                                (<span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="credits" contenteditable="true"><?php echo $course->credits; ?></span>)
-                                            </h5>
-                                            <div class="clearfix"></div>
-                                            <h5 class="subheader cell_body course_section">
-                                                <small>
-                                                    <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="description" contenteditable="true">
-                                                        <?php echo $course->description; ?>
-                                                    </span>
-                                                </small>
-                                            </h5>
-                                            <div class="cell_footer course_section " >
-                                                <div class="footer_wrapper">
-                                                    <div class=" <?php echo $course->labelcolor; ?> label ">
-                                                        <h4>
-                                                            <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="labelmessage" contenteditable="true">
-                                                                <?php echo rtrim($course->labelmessage); ?>
-                                                            </span>
-                                                            <i data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-color="<?php echo $course->labelcolor; ?>" class="fi-paint-bucket  status-nav" title="change status color"></i>
-                                                        </h4>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
                                         <div class="ch-info-back">
                                             <i class="fi-x right return-icon" ></i>
 
@@ -101,6 +68,39 @@
                                             echo form_close();
                                             ?>
 
+                                        </div><!--end ch-info-back-->
+                                        <div class="ch-info-front ch-img-<?php echo $semester; ?>"  >
+                                            <i class="fi-widget right settings-icon "  ></i>
+                                            <div class="cell_head course_section">
+                                                <a target="blank" href="<?php echo $course->link; ?>">
+                                                    <i class="fi-link  " ></i>
+                                                </a>
+                                                <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="title" contenteditable="true">
+                                                    <?php echo $course->title; ?>
+                                                </span>
+                                                (<span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="credits" contenteditable="true"><?php echo $course->credits; ?></span>)
+                                            </div>
+                                            <div class="clearfix"></div>
+                                            <div class="subheader cell_body course_section">
+                                                <small>
+                                                    <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="description" contenteditable="true" data-tooltip aria-haspopup="true" class="has-tip" title="<?php echo $course->description; ?>">
+                                                        <?php echo $course->description; ?>
+                                                    </span>
+                                                </small>
+                                            </div>
+                                            <div class="cell_footer course_section " >
+                                                <div class="footer_wrapper">
+                                                    <div class=" <?php echo $course->labelcolor; ?> label ">
+                                                        <h4>
+                                                            <span class="edit-box" data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-field="labelmessage" contenteditable="true" >
+                                                                <?php echo $course->labelmessage; ?>
+                                                            </span>
+                                                            <i data-semester="<?php echo $semester ?>" data-position="<?php echo $position ?>" data-color="<?php echo $course->labelcolor; ?>" class="fi-paint-bucket  status-nav" title="change status color"></i>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>	
                                 </div>
