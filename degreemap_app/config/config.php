@@ -15,7 +15,7 @@
 |
 */
 $config['base_url']	= '';
-$config['site_title'] = "DegreeMap";
+$config['site_title'] = "DegreeMap (BETA)";
 /*
 |--------------------------------------------------------------------------
 | Index File

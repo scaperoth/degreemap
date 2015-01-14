@@ -11,7 +11,7 @@ class MY_Controller extends CI_Controller
         'except' => array('login', 'signup'),
     );
     protected $after_filter = array();
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -19,7 +19,6 @@ class MY_Controller extends CI_Controller
         $this->load->library('form_validation');
         session_start();
     }
-       
 
     // Utilize _remap to call the filters at respective times
     public function _remap($method, $params = array())
@@ -120,8 +119,8 @@ class MY_Controller extends CI_Controller
     {
         if (!$this->session->userdata('logged_in'))
         {
-            $this->session->set_userdata('flash', "<p>Access Denied</p>");
-            redirect('user/login', 'refresh');
+            set_flash('Access Denied', 'alert');
+            redirect('user/login');
         }
     }
 

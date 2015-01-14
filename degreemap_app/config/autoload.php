@@ -88,7 +88,8 @@ $autoload['helper'] = array(
     'url',
     'form',
     'auth',
-    'flash'
+    'flash',
+    'advisor'
 );
 
 

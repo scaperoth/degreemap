@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `degreemap`.`users` (
   `lname` VARCHAR(45) NOT NULL,
   `is_advisor` INT(11) NOT NULL DEFAULT '0',
   `is_admin` INT(11) NOT NULL DEFAULT '0',
-  `advisor_id` INT(11) NULL DEFAULT NULL,
+  `advisor_id` VARCHAR(90) NULL DEFAULT NULL,
   PRIMARY KEY (`username`))
 ENGINE = InnoDB
 AUTO_INCREMENT = 12
@@ -40,3 +40,4 @@ ADD CONSTRAINT `fk_username`
   REFERENCES `degreemap`.`users` (`username`)
   ON DELETE CASCADE
   ON UPDATE CASCADE;
+

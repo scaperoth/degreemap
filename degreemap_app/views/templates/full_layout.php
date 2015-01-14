@@ -49,7 +49,7 @@
                         <?php else: ?>
                             <!-- Right Nav Section -->
                             <ul class="right">
-                                <li class="<?php echo ($page2 == "login") ? "active" : ""; ?>"><a href="<?php echo site_url("user/login"); ?>">Log In</a></li>
+                                <li class="<?php echo ($page2 == "login" || !$page1) ? "active" : ""; ?>"><a href="<?php echo site_url("user/login"); ?>">Log In</a></li>
                                 <li class="<?php echo ($page2 == "signup") ? "active" : ""; ?>"><a href="<?php echo site_url("user/signup"); ?>">Sign Up</a></li>
 
                             </ul>
@@ -69,7 +69,7 @@
                     <br/>
                     <div class="row">
                         <div class="medium-12 columns">
-                            <?php echo ($page2 == "login" || $page2 == "signup" || $page1 == "verifylogin" || $page1 == "verifysignup") ? "<br/><br/>" : ""; ?>
+                            <?php echo (!$page1 || $page2 == "login" || $page2 == "signup" || $page1 == "verifylogin" || $page1 == "verifysignup") ? "<br/><br/>" : ""; ?>
                             <?php if (isset($header)): ?>
                                 <h1 class="text-center"><?php echo $header; ?></h1>
                             <?php else: ?>

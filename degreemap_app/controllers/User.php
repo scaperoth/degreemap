@@ -19,12 +19,8 @@ class User extends MY_Controller
      */
     public function index()
     {
-        $data['username'] = $this->session->userdata('username');
-        $data['fname'] = $this->session->userdata('fname');
-        $data['lname'] = $this->session->userdata('fname');
-        $data['full_name'] = $this->session->userdata('full_name');
         
-        $data['content'] = $this->load->view('user/index', $data, true);
+        $data['content'] = $this->load->view('user/index', NULL, true);
         $this->load->view('templates/full_layout', $data);
     }
 

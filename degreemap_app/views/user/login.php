@@ -1,10 +1,10 @@
 <h1 class="text-center">Log In</h1>
-<div class="large-3 large-centered columns">
+<div class="large-3 large-centered medium-6 medium-centered columns">
     <div class="login-box">
         <div class="row">
             <div class="large-12 columns">
 
-                <?php echo form_open('verifylogin'); ?>
+                <?php echo form_open('VerifyLogin'); ?>
                 <div class="row">
                 </div>
                 <div class="row">

@@ -1,5 +1,5 @@
 <h1 class="text-center">Sign Up</h1>
-<div class="large-3 large-centered columns">
+<div class="large-3 large-centered medium-6 medium-centered columns">
     <div class="login-box">
         <div class="row">
             <div class="large-12 columns">

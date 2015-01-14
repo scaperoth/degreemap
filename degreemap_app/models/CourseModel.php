@@ -11,6 +11,24 @@ class CourseModel extends CI_Model
     const MAX_SEMESTERS_DEFAULT = 8;
     const TABLE_NAME = "courses";
 
+    private $username;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->username = $this->session->userdata("username");
+
+        if (is_advisor())
+        {
+            $student = $this->session->userdata('student_view');
+            if ($student != NULL)
+            {
+                $this->username = $student;
+            }
+        }
+    }
+
     /**
      * 
      * @param type $table_name
@@ -86,7 +104,7 @@ class CourseModel extends CI_Model
     {
         if ($semester === FALSE)
         {
-            $this->db->where('username', $this->session->userdata("username"));
+            $this->db->where('username', $this->username);
             $query = $this->db->get(self::TABLE_NAME);
             return $query->result_array();
         }
@@ -97,7 +115,7 @@ class CourseModel extends CI_Model
             $this->db->from(self::TABLE_NAME);
             $this->db->where('semester', $semester);
             $this->db->where('position', $position);
-            $this->db->where('username', $this->session->userdata("username"));
+            $this->db->where('username', $this->username);
 
             $result = $this->db->get();
 
@@ -108,7 +126,7 @@ class CourseModel extends CI_Model
         }
 
         $this->db->where('semester', $semester);
-        $this->db->where('username', $this->session->userdata("username"));
+        $this->db->where('username', $this->username);
         $this->db->order_by("position");
         $query = $this->db->get();
         return $query;
@@ -122,7 +140,7 @@ class CourseModel extends CI_Model
     {
         $this->db->select('semester');
         $this->db->from(self::TABLE_NAME);
-        $this->db->where('username', $this->session->userdata("username"));
+        $this->db->where('username', $this->username);
         $this->db->group_by("semester");
         return $this->db->get();
     }
@@ -135,7 +153,7 @@ class CourseModel extends CI_Model
     {
         $this->db->select('max(position) as max_count');
         $this->db->from(self::TABLE_NAME);
-        $this->db->where('username', $this->session->userdata("username"));
+        $this->db->where('username', $this->username);
 
         $result = $this->db->get();
 
@@ -153,7 +171,7 @@ class CourseModel extends CI_Model
     {
         $this->db->select('max(semester) as max_semester');
         $this->db->from(self::TABLE_NAME);
-        $this->db->where('username', $this->session->userdata("username"));
+        $this->db->where('username', $this->username);
         $result = $this->db->get();
 
         //if ($result === FALSE || $result->first_row()->max_semester === NULL)
@@ -170,7 +188,7 @@ class CourseModel extends CI_Model
     {
         $this->db->select('SUM(credits) as num_credits');
         $this->db->from(self::TABLE_NAME);
-        $this->db->where('username', $this->session->userdata("username"));
+        $this->db->where('username', $this->username);
         $this->db->limit(1);
 
         $result = $this->db->get();
@@ -209,7 +227,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Ital 1",
                 "position" => 1,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 1111" => array(
                 "semester" => 1,
@@ -220,7 +238,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "Xfer Java 1",
                 "position" => 2,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 1010" => array(
                 "semester" => 1,
@@ -230,7 +248,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "Waive or Research",
                 "position" => 3,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Math Reqt 1" => array(
                 "semester" => 1,
@@ -240,7 +258,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "MATH 1220/1221",
                 "position" => 4,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "UW 1020" => array(
                 "semester" => 1,
@@ -250,7 +268,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "UW 1020",
                 "position" => 5,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "H/SS 2" => array(
                 "semester" => 2,
@@ -260,7 +278,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Xfer Econ",
                 "position" => 1,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 1112" => array(
                 "semester" => 2,
@@ -270,7 +288,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "Waive or Research",
                 "position" => 2,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 1311" => array(
                 "semester" => 2,
@@ -280,7 +298,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Complete",
                 "position" => 3,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Math Reqt 2" => array(
                 "semester" => 2,
@@ -290,7 +308,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "MATH 1232",
                 "position" => 4,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Science Reqt 1" => array(
                 "semester" => 2,
@@ -300,7 +318,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Xfer Bio",
                 "position" => 5,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "H/SS 3" => array(
                 "semester" => 3,
@@ -310,7 +328,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Xfer SOC 1001",
                 "position" => 1,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 2113" => array(
                 "semester" => 3,
@@ -320,7 +338,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Complete",
                 "position" => 2,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 2312" => array(
                 "semester" => 3,
@@ -330,7 +348,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "In Progress",
                 "position" => 3,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 2461" => array(
                 "semester" => 3,
@@ -340,7 +358,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Complete",
                 "position" => 4,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Science Reqt 2" => array(
                 "semester" => 3,
@@ -350,7 +368,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "PHYS I",
                 "position" => 5,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CS Elective *" => array(
                 "semester" => 4,
@@ -360,7 +378,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "alert",
                 "labelmessage" => "Need 3000+ CS crse",
                 "position" => 1,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 2441W" => array(
                 "semester" => 4,
@@ -370,7 +388,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Complete",
                 "position" => 2,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 3410" => array(
                 "semester" => 4,
@@ -380,7 +398,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Complete",
                 "position" => 3,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Stat Reqt " => array(
                 "semester" => 4,
@@ -390,7 +408,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "STAT 1053",
                 "position" => 4,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Science Reqt 3" => array(
                 "semester" => 4,
@@ -400,7 +418,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "alert",
                 "labelmessage" => "SUM2015: PHYS 2",
                 "position" => 5,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "H/SS 4" => array(
                 "semester" => 5,
@@ -410,7 +428,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Xfer PHIL 1051",
                 "position" => 1,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 3212" => array(
                 "semester" => 5,
@@ -420,7 +438,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Complete",
                 "position" => 2,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 3313" => array(
                 "semester" => 5,
@@ -430,7 +448,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Complete",
                 "position" => 3,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 3411" => array(
                 "semester" => 5,
@@ -440,7 +458,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Complete",
                 "position" => 4,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "H/SS 5" => array(
                 "semester" => 6,
@@ -450,7 +468,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "SUM2015: PHIL 1062",
                 "position" => 1,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Unrestricted Elective 1" => array(
                 "semester" => 6,
@@ -460,7 +478,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success",
                 "labelmessage" => "Xfer Comm 1040",
                 "position" => 2,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CS Track Reqt 1" => array(
                 "semester" => 6,
@@ -470,7 +488,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "SUM2015: ADV OS",
                 "position" => 3,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Non-tech Track Elective 1" => array(
                 "semester" => 6,
@@ -480,7 +498,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "alert",
                 "labelmessage" => "? ",
                 "position" => 4,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Unrestricted Elective 2" => array(
                 "semester" => 6,
@@ -490,7 +508,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "success ",
                 "labelmessage" => "Continuous Algo",
                 "position" => 5,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "H/SS 6" => array(
                 "semester" => 7,
@@ -500,7 +518,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "alert",
                 "labelmessage" => "SUM2015: SOC 1003",
                 "position" => 1,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 4243" => array(
                 "semester" => 7,
@@ -510,7 +528,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "SP2015",
                 "position" => 2,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CS Track Reqt 2" => array(
                 "semester" => 7,
@@ -520,7 +538,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "alert",
                 "labelmessage" => "FA2015",
                 "position" => 3,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Non-tech Track Elective 2" => array(
                 "semester" => 7,
@@ -530,7 +548,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "alert",
                 "labelmessage" => "? ",
                 "position" => 4,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Unrestricted Elective 3" => array(
                 "semester" => 7,
@@ -540,7 +558,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "Xfer: 1099->1103 MUS",
                 "position" => 5,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Unrestricted Elective 4" => array(
                 "semester" => 8,
@@ -550,7 +568,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "Xfer: 1099->1002 REL",
                 "position" => 1,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CSci 4244" => array(
                 "semester" => 8,
@@ -560,7 +578,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "SP2015",
                 "position" => 2,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "CS Track Reqt 3" => array(
                 "semester" => 8,
@@ -570,7 +588,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "alert",
                 "labelmessage" => "FA2015",
                 "position" => 3,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Non-tech Track Elective 3 " => array(
                 "semester" => 8,
@@ -580,7 +598,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "alert",
                 "labelmessage" => "? ",
                 "position" => 4,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
             "Unrestricted Elective 5" => array(
                 "semester" => 8,
@@ -590,7 +608,7 @@ class CourseModel extends CI_Model
                 "labelcolor" => "warning",
                 "labelmessage" => "Xfer: 1099->3142 MKTG",
                 "position" => 5,
-                "username" => $this->session->userdata('username'),
+                "username" => $this->username,
             ),
         );
 
